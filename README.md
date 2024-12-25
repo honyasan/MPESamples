@@ -16,6 +16,7 @@
 - yokogaki_chouhen_kindle　長編（複数mdファイル）の使用例
 - yokogaki_kindle　横書きで、PandocによりKindle Previewerを前提にしたEUB形式を得る場合の例
 - yokogaki_pdf　横書きで、Chrome(puppeteer)によりPDF形式を得る場合の例
+- yokogaki_plane_pdf　横書きで、スタイルシートを空にした場合の例
 
 ## サブフォルダについて
 
