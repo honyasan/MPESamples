@@ -17,6 +17,7 @@
 - yokogaki_kindle　横書きで、PandocによりKindle Previewerを前提にしたEUB形式を得る場合の例
 - yokogaki_minutes_pdf　議事録をイメージした簡素なスタイルの場合の例
 - yokogaki_pdf　横書きで、Chrome(puppeteer)によりPDF形式を得る場合の例
+- yokogaki_pdf2　横書きで、Chrome(puppeteer)によりPDF形式を得る場合の例。章節項図表式への番号付与あり。
 - yokogaki_plane_pdf　横書きで、スタイルシートを空にした場合の例
 
 ## サブフォルダについて
