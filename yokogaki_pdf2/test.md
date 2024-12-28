@@ -34,7 +34,7 @@ output:
 ---
 # チートシート{ignore=true .noPageBreak}
 
-## はじめに{ignore=true .noPageBreak}
+## はじめに{ignore=true .noPageBreak .noNumbering}
 
 このドキュメントはVSCode×MPE×Pandocで、html(offline)形式・Chrome(puppeteer) PDF形式・Pandoc EPUB形式に出力するマークダウンを書くためのスタイルを適用したチートシートです。
 
@@ -42,7 +42,7 @@ output:
 
 本文各行はKindle Previewerが許可するEPUB形式に出力できないものもあるので記載内容に注意してください。
 
-## 目次{ignore=true .noPageBreak}
+## 目次{ignore=true .noPageBreak .noNumbering}
 
 <!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=4 orderedList=false} -->
 
@@ -443,21 +443,21 @@ $$\sum_{n=1}^{100} n$$
 !!! Quote
     引用を表現できます。
 
-## おわりに {ignore=true}
+## おわりに {ignore=true .noNumbering}
 
 あとがき。
 
-## 文献{ignore=true .noPageBreak}
+## 文献{ignore=true .noPageBreak .noNumbering}
 
-### 引用文献 {ignore=true}
+### 引用文献 {ignore=true .noNumbering}
 
 - 引用した文献
 
-### 参考文献 {ignore=true}
+### 参考文献 {ignore=true .noNumbering}
 
 - 参考にした文献
 
-## 奥付{ignore=true .noPageBreak}
+## 奥付{ignore=true .noPageBreak .noNumbering}
 
 - 書名 チートシート
 - 著者・発行元 サンプルマン

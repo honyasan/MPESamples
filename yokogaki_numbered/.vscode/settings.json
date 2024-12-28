@@ -1,0 +1,13 @@
+{
+  "editor.fontFamily": "'游ゴシック', Consolas, 'Courier New', monospace",
+  "markdown-preview-enhanced.pandocMarkdownFlavor": "markdown-raw_tex+tex_math_single_backslash+emoji+mark+abbreviations",
+  "markdown-preview-enhanced.usePandocParser": true,
+  "markdown-preview-enhanced.puppeteerWaitForTimeout": 5000,
+  "markdown-preview-enhanced.mathRenderingOption": "MathJax",
+  "markdown-toc.depthTo": 4,
+  "markdown.extension.toc.levels": "2..4",
+  "markdown-toc-num.chapterDepthTo": 3,
+  "markdown-toc-num.showMenuInsertToc": false,
+  "markdown-toc-num.showMenuInsertChapterNumber": true,
+  "markdown-toc-num.showMenuRemoveToc": false
+}
