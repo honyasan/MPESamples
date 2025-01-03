@@ -183,71 +183,85 @@ li {
   margin-left: auto !important;
 }
 /* 箇条書き・目次のスタイル ここまで*/
-/* 採番用 - ここから*/
+/* ナンバリング - ここから*/
 /*
-body {
-  counter-reset: level2H 0;
-  counter-reset: level3H 0;
-  counter-reset: level4H 0;
-  counter-reset: figure 0;
-  counter-reset: table 0;
-  counter-reset: math 0;
+html body {
+  counter-set: h2 h3 h4 figure table math;
 }
 
-h2{
-  counter-reset: level3H 0;
-
-  &:not(.unnumbered) {
-    counter-increment: level2H;
-
-    &::before {
-      content: "第" counter(level2H) "章　";
-    }
-  }
+h1:not(.noNumbering) {
+  counter-set: h2 h3 h4;
 }
 
-h3{
-  counter-reset: level4H 0;
-
-  &:not(.unnumbered) {
-    counter-increment: level3H;
-
-    &::before {
-      content: counter(level2H) ". " counter(level3H) ".　";
-    }
-  }
+h2:not(.noNumbering) {
+  counter-set: h3 h4;
 }
 
-h4:not(.unnumbered) {
-  counter-increment: level4H;
-
-  &::before {
-    content: counter(level2H) ". " counter(level3H) ". " counter(level4H) ".　";
-  }
+h2:not(.noNumbering)::before {
+  counter-increment: h2;
+  content: "第" counter(h2) "章　";
 }
 
-table {
-  counter-increment: table;
+h3:not(.noNumbering) {
+  counter-set: h4;
 }
 
-table > caption::before {
-  content: "表" counter(table) "． ";
+h3:not(.noNumbering)::before {
+  counter-increment: h3;
+  content: counter(h2) ".  " counter(h3) ".　";
 }
 
-figcaption::before {
+h4:not(.noNumbering)::before {
+  counter-increment: h4;
+  content: counter(h2) ".  " counter(h3) ".  " counter(h4) ".　";
+}
+
+figcaption:not(.noNumbering)::before {
   content: "図" counter(figure) "．";
 }
 
-figure {
+figure:not(.noNumbering) {
   counter-increment: figure;
 }
 
-figcaption {
-  display: block;
+figcaption:not(.noNumbering) {
+  display: block !important;
   text-align: center;
 }
+
+table:not(.noNumbering)>caption::before {
+  content: "表" counter(table) "． ";
+}
+
+table:not(.noNumbering) {
+  counter-increment: table;
+}
+
+mjx-container[display="true"]::before,
+p:has(.katex-display) {
+  display: flex !important;
+  justify-content: center;
+}
+
+mjx-container[display="true"],
+p:has(.katex-display) {
+  counter-increment: math;
+}
+
+mjx-container[display="true"]::after,
+p:has(.katex-display)::after {
+  content: "　…（式" counter(math) "）";
+  font-size: 0.9em;
+  margin: auto 0em;
+}
 */
-/* 採番用 - ここまで */
+/* ナンバリング - ここから */
+/* ナンバリングしないとき - ここから */
+figcaption {
+  display: none !important;
+  /* text-align: center; */
+}
+/* ナンバリングしないとき - ここまで */
 blockquote {
   margin: 0 0 0.5em 1em;
   padding: 0em 0.5em;
