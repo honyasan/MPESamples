@@ -13,6 +13,7 @@
 ## 各フォルダについて
 
 - tategaki_kindle　縦書きの例
+- tategaki_ruby_kindle　parser.jsによるルビ・傍点の実現例（縦書き）
 - yokogaki_chouhen_kindle　長編（複数mdファイル）の使用例
 - yokogaki_kindle　横書きで、PandocによりKindle Previewerを前提にしたEUB形式を得る場合の例
 - yokogaki_minutes_pdf　議事録をイメージした簡素なスタイルの場合の例

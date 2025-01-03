@@ -1,0 +1,7 @@
+{
+  "editor.fontFamily": "'游ゴシック', Consolas, 'Courier New', monospace",
+  "markdown-preview-enhanced.pandocMarkdownFlavor": "markdown-raw_tex+tex_math_single_backslash+emoji+mark+abbreviations",
+  "markdown-preview-enhanced.usePandocParser": true,
+  "markdown-preview-enhanced.puppeteerWaitForTimeout": 5000,
+  "markdown-preview-enhanced.mathRenderingOption": "MathJax"
+}
