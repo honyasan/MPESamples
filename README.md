@@ -42,6 +42,63 @@
 1. assetsフォルダのファイルを見て、目的の様式として十分かを確認する。
 1. VSCodeからフォルダをワークスペースとして開き、test.mdを変更してみる。
 
+## 動作のカスタマイズ
+
+実例はparser.jsのタイプ別の指定を参照してください。
+
+### onWillParseMarkdown
+
+|      パラメータ       |                                     説明                                     |      値（例）      |
+| :-------------------- | :--------------------------------------------------------------------------- | :----------------- |
+| isBypass              | カスタマイズ処理全体をバイパスする                                           | true or false      |
+| enableNumbering       | ナンバリングする                                                             | true or false      |
+| enableDetailNumbering | 図・表・式をナンバリングする                                                 | true or false      |
+|                       |                                                                              |                    |
+| ignoreClass           | ナンバリングしないクラス名                                                   | 'noNumbering'      |
+| headFrom              | ナンバリングする開始見出しレベル                                             | 'h2'               |
+| headDepth             | ナンバリングする見出しレベルの深さ                                           | 3                  |
+| headFormat            | ナンバリングの形式<br> {num} - 半角<br> {zenkaku} - 全角<br>{kanji} - 漢数字 | ['{num}','-{num}'] |
+| classPrefixList       | sectionに付けるクラス名                                                      | ['chapter']        |
+| combineTitle          | ナンバリングを繋げて表示する                                                 | true or false      |
+| endOfOutline          | ナンバリングの最後のスペース文字                                             | '　'               |
+|                       |                                                                              |                    |
+| isThroughOut          | 図・表・式のナンバリングを文書全体の通し番号とする                           | true or false      |
+| figurePrefix          | 図のナンバリングの接頭語                                                     | 'Fig.'             |
+| figureSuffix          | 図のナンバリングの接尾語・スペース                                           | ' '                |
+| tablePrefix           | 表のナンバリングの接頭語                                                     | 'Table'            |
+| tableSuffix           | 表のナンバリングの接尾語・スペース                                           | ' '                |
+| mathPrefix            | 式のナンバリングの接頭語                                                     | '('                |
+| mathSuffix            | 式のナンバリングの接尾語                                                     | ' '                |
+| detailFormat          | 図・表・式のナンバリングの形式                                               | '{num}'            |
+|                       |                                                                              |                    |
+| aozoraRuby            | 青空文庫書式の一部（ルビ）を有効にする                                       | true or false      |
+|                       |                                                                              |                    |
+| indentString          | 段落頭に字下げで挿入する文字列                                               | '　'               |
+| excludeIndentClasses  | indentStringを適用しないクラス名                                             | ['sage2']          |
+
+### onDidParseMarkdown
+
+|        パラメータ        |                                                  説明                                                  |      値（例）      |
+| :----------------------- | :----------------------------------------------------------------------------------------------------- | :----------------- |
+| isBypass                 | カスタマイズ処理全体をバイパスする                                                                     | true or false      |
+| ignoreClass              | ナンバリングを無視する見出しのクラス名                                                                 | 'noNumbering'      |
+| headFrom                 | ナンバリングする開始見出しレベル                                                                       | 'h2'               |
+| headDepth                | ナンバリングする見出しレベルの深さ                                                                     | 3                  |
+| classPrefixList          | sectionに付けるクラス名                                                                                | ['chapter']        |
+|                          |                                                                                                        |                    |
+| headerType:              | ページヘッダ・フッタの種類<br>'none' - なし<br>'center' - 左右中央<br>'top' - 上部<br>'outside' - 小口 | 'center'           |
+| headerTitle:             | 柱の表示<br>'none' - なし<br>'book' - 書籍名<br>'chapter' - チャプター名                               | 'none'             |
+| totalPages               | 総ページ数を表示する                                                                                   | true or false      |
+|                          |                                                                                                        |                    |
+| pageProgressionDirection | 'ltr' - 横書き（右へ）<br>'rtl' - 縦書き（左へ）                                                       | 'ltr'              |
+|                          |                                                                                                        |                    |
+| tocClassName             | @import方式のTOCを包んでいるクラス名                                                                   | 'pdf-toc'          |
+| tocLinkWrapperClassName  | TOCの項をラップするクラス名                                                                            | 'toc-link-wrapper' |
+| tocPagePrefix            | 目次のページ番号を指定する前置詞                                                                       | 'p.'               |
+|                          |                                                                                                        |                    |
+| removeSpace              | 段落中の「。」に続く半角スペースを除去する                                                             | true or false      |
+
+
 ## scriptフォルダについて
 
 |      ファイル名       |                            説明                            |
