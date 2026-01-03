@@ -1,0 +1,1011 @@
+/* Please visit the URL below for more information:
+     https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+/* MPE指定値のクリア＆論理プロパティでの上書き */
+
+/* html body:not([for="html-export"], [data-presentation-mode], [html-show-sidebar-toc]),
+   html body[for="html-export"]:not([data-presentation-mode]) */
+
+html, body {
+  overflow: visible !important;
+}
+
+html body {
+  /* プレビューもエクスポートも同じスタイルとなるよう広く適用
+      margin, paddingは0で統一し、特異度が高い個別の上書きをしない主旨 */
+  position: static !important;
+  width: 100% !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview {
+  width: 100%;
+  height: auto;
+  box-sizing: inherit;
+
+  /* エクスポート時のbody直下内の水平センタリングを除去し、全体サイズでリフローする主旨 */
+  position: static;
+  transform: revert;
+}
+
+html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview {
+  width: auto;
+  height: 100%;
+}
+
+/* Pandoc指定値の変更 */
+
+pre>code.sourceCode>span {
+  /* KindlePreviewerでinline-blockの高さが異常になる対処
+     かえってコードブロックが不適切に動作する場合はこれを除去する */
+  display: inline;
+}
+
+/*  以下、独自のスタイル指定
+    通常の指定           Kindle電子書籍用（font-familyなど指定しない）
+    @media print内       Kindleペーパーバック・PDF出力用
+    .markdown-preview内  プレビュー画面・EPUB3用 */
+
+/* 余白の指定 */
+
+.markdown-preview {
+  @media screen {                         /* プレビュー画面はPDF出力風 */
+    padding: 9.6mm !important;            /* Kindle 24～150p相当のマージン */
+  }
+
+  @media screen and (max-width: 148mm) {     /* A5判より小さい→スマホ風 */
+    padding: 0 1.0rem !important;
+  }
+}
+
+/* 横書き・左綴じ・両面のマージン設定 */
+
+:root {
+  /* ページ・用紙サイズとマージン */
+  --page-width: 148mm;      /* ページの幅 */
+  --page-height: 210mm;     /* ページの高さ */
+
+/*  --page-width: 148mm;
+  --page-height: 210mm; */
+  --top-margin: 17.0mm;     /* 天マージン */
+  --bottom-margin: 15.0mm;  /* 地マージン */
+  --outer-margin: 15.0mm;   /* 外側マージン */
+  --inner-margin: 15.0mm;   /* 内側（ノド）マージン */
+  --content-max-block-size: calc(var(--page-width) - var(--inner-margin) - var(--outer-margin));
+  --serif-set: 'UD Digi Kyokasho N-R', serif;
+  --sans-serif-set: 'PlemolJP HS', 'BIZ UDGothic', sans-serif;
+  --codeblock-set: 'PlemolJP HS', sans-serif;
+
+  /* macos用の例 */
+  --macos-serif-set: 'SF Mono', 'Hiragino Mincho ProN', serif;
+  --macos-sans-serif-set: 'SF Mono', 'Hiragino Kaku Gothic ProN', sans-serif;
+}
+
+@page {
+  size: var(--page-width) var(--page-height);
+  margin-top: var(--top-margin);
+  margin-bottom: var(--bottom-margin);
+}
+
+/* 横書き・最初のページは右で、右へ進む本のページ */
+
+
+@page :first {
+  margin-left: var(--inner-margin);
+  margin-right: var(--outer-margin);
+}
+
+/* 縦書き・最初のページは左で、左へ進む本のページ */
+
+/*
+@page :first {
+  margin-left: var(--outer-margin);
+  margin-right: var(--inner-margin);
+}
+*/
+
+@page :right {
+  margin-left: var(--inner-margin);
+  margin-right: var(--outer-margin);
+}
+
+@page :left {
+  margin-left: var(--outer-margin);
+  margin-right: var(--inner-margin);
+}
+
+/* 文字まわりの指定 */
+html body {
+  font-size: 1.0em;   /* Kindlleのリフロー型は1.0em リーダーのサイズ4で0.868rem程度 */
+}
+
+.markdown-preview {
+  font-size: 10.5pt;  /* プレビュー画面の本文のフォントサイズ */
+  line-height: 2.0;
+  letter-spacing: 0;  /* Windowsで文字揃えがズレる対策 */ 
+}
+
+@media screen and (max-width: 450px) {
+  html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview {
+    /* プレビュー画面でのMPEによる不要なスタイル指定を本文と同じサイズで上書きする */
+    font-size: 10.5pt !important;
+  }
+}
+
+@media print {
+  .markdown-preview {
+    font-size: 10pt !important;  /* 印刷本文のフォントサイズ */
+  }
+}
+
+ruby rt {
+  font-size: 0.5em;       /* 本文の半分 */
+}
+
+sup,                      /* 上付き・下付き */
+pre,                      /* Kindleでのコードブロック */
+pre[class*="language-"],  /* コードブロック */
+.line-numbers-rows,       /* 行番号あり */
+.line-highlight::before,  /* ハイライトあり */
+.line-highlight[data-end]::after {
+  font-size: 0.9em;       /* 本文より一回り小さくする */
+  line-height: 1.5;
+}
+
+code,   /* インラインコードブロック、コードブロックのコード */
+pre.line-numbers .line-numbers-rows {
+  font-size: 1.0em;       /* 文字サイズの相対指定が2重にかかるのを回避 */
+}
+
+pre > code.sourceCode > span {
+  line-height: 1.5;
+}
+
+/* フォントの指定 */
+
+.markdown-preview {
+  /*  プレビューとエクスポート（PDF出力・印刷）のスタイルは、markdown-previewクラスに指定
+      電子書籍にはフォント指定の影響を与えない
+      その他の印刷時のみの指定は@media printまたは@pageに指定 */
+
+  /* Kindleは非公開の'TBMincho' 'TBGothic'を使用
+      font-family: 'SF Mono', 'Hiragino Mincho ProN', 'UD Digi Kyokasho N-R', serif !important;
+      font-family: 'PlemolJP HS', 'SF Mono', 'Hiragino Kaku Gothic ProN', 'BIZ UDGothic', sans-serif;
+      font-family: 'TBGothic', 'BIZ UDGothic', sans-serif; */
+  font-family: var(--serif-set);
+}
+
+.markdown-preview sup,      /* 上付き・下付き */
+.markdown-preview code,     /* インラインコードブロック */
+.markdown-preview pre[class*="language-"], /* コードブロック */
+.markdown-preview pre[class*="language-"] code, /* コードブロックのコード */
+.markdown-preview pre.line-numbers .line-numbers-rows,    /* 行番号あり */
+.markdown-preview pre[data-line] .line-highlight::before, /* ハイライトあり */
+.markdown-preview pre[data-line] .line-highlight[data-end]::after {
+  font-family: var(--codeblock-set);
+}
+
+/* 印刷時のヘッダとノンブル用のスタイル（別途contentの指定が必要） */
+
+@page {
+  font-family: var(--serif-set);
+  font-size: 0.6667rem;   /* ノンブルとヘッダータイトルのフォントサイズ */
+
+  @top-left {
+    margin: auto auto 0.25rem 0;
+    vertical-align: bottom;
+  }
+
+  @top-center {
+    margin: auto auto 0.25rem;
+    vertical-align: bottom;
+  }
+
+  @top-right {
+    margin: auto 0 0.25rem auto;
+    vertical-align: bottom;
+  }
+
+  @bottom-left {
+    margin: 0.25rem auto auto 0;
+    vertical-align: top;
+  }
+
+  @bottom-center {
+    margin: 0.25rem auto auto 0;
+    vertical-align: top;
+  }
+
+  @bottom-right {
+    margin: 0.25rem 0 auto auto;
+    vertical-align: top;
+  }
+}
+
+@page :first {
+  margin-left: var(--inner-margin);
+  margin-right: var(--outer-margin);
+}
+
+@page :right {
+  margin-left: var(--inner-margin);
+  margin-right: var(--outer-margin);
+}
+
+@page :left {
+  margin-left: var(--outer-margin);
+  margin-right: var(--inner-margin);
+}
+
+.page-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/*
+.title-page {
+  display: block;
+  position: relative;
+  height: 100%;
+  width: var(--content-max-block-size);
+}
+
+.title-page .title-page-inner {
+  position: absolute;
+  top: 50%;
+  left: calc(50% - 1rem);
+}
+
+.title-page .title-page-inner p {
+  margin: 0;
+}
+*/
+
+/* 全般のスタイル */
+
+html body {
+  color: #000;
+  background-color: #fff;
+  overflow: initial;
+  box-sizing: border-box;
+  word-break: normal;
+  line-break: strict;
+  word-wrap: break-word;
+  /* overflow-wrap: anywhere; */
+  /* hanging-punctuation: first allow-end; */ /* not supported */
+  widows: 2;
+  orphans: 2;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  page-break-before: avoid;
+  break-before: avoid;
+}
+
+h1.unnumbered {
+  display: none;          /* h1見出しを表示する場合は display: block; */
+}
+
+.page-break-common {      /* ページ送り　印刷時・EPUB時の共用 */
+  display: block;
+  page-break-before: always;
+  break-before: always;
+  margin-top: 0;
+}
+
+.page-break {             /* その他のヘッダを強制ページ送りする　印刷時の調整用 */
+  @media print {
+    display: block;
+    page-break-before: always;
+    break-before: always;
+    margin-top: 0;
+  }
+}
+
+h1, h2 {
+  font-size: 2.0em;       /* 1.2rem, 1.6rem */
+  font-weight: 600;
+  border: solid 0px #2f51b4;
+  border-radius: 10px;
+  margin: 1.5rem 0;
+  padding: 0.5rem 0 0.5rem 0.25rem;
+}
+
+h2:not(.page-break) {
+  @media print {
+    margin: 1.5rem 0;
+  }
+}
+
+h2.page-break {
+  @media print {
+    margin: 0 0 1.5rem;
+  }
+}
+
+h3 {
+  font-size: 1.4em;       /* 1.12rem, 1.4rem */
+  font-weight: 600;
+  display: inline-block;  /* kindle is not supported ? */
+  border-bottom: solid 0rem #2f51b4;
+  margin: 1rem 0;
+}
+
+h4 {
+  font-size: 1.25em;      /* 1.07rem, 1.25rem */
+  font-weight: 600;
+  line-height: 4.0;
+}
+
+h5 {
+  font-size: 1.0em;
+  font-weight: 600;
+}
+
+h6 {
+  font-size: 1.0em;
+  font-weight: 600;
+  color: #7e7e7e;
+}
+
+del {
+  color: #7e7e7e;
+}
+
+a:not([href]) {
+  color: inherit;
+  text-decoration: none;  /* ignored on Kindle */
+}
+
+a {
+  color: #08c;
+  text-decoration: none;  /* ignored on Kindle */
+
+  @media print {
+    color: #000;        /* for Kindle Paperback */
+  }
+}
+
+a:hover {
+  color: #00a3f5;
+  text-decoration: none;  /* ignored on Kindle */
+}
+
+p {
+  hanging-punctuation: first;
+}
+
+p, ol, ul, pre, pre[class*="language-"], dl {
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+blockquote > p {
+  text-indent: 0;
+}
+
+.md-toc p, li > p, blockquote > p {
+  margin-bottom: 0;
+}
+
+ol, ul {
+  padding-left: 2em;
+}
+
+ol.no-list, ul.no-list {
+  padding: 0;
+  list-style-type: none;
+}
+
+ol ol, ol ul, ul ol, ul ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+li.task-list-item {
+  list-style: none;
+}
+
+.task-list-item-checkbox {
+  margin: 0 0 0 -2em;
+}
+
+.task-list-item-checkbox:hover {
+  cursor: pointer;
+}
+
+blockquote {
+  margin: 0 0 1em;
+  padding: 0 0.6rem;
+  background-color: #f0f0f0;
+  border-left: 5px solid #666;
+}
+
+hr {
+  width: 100%;
+  height: 2px;
+  margin: 1rem 0;
+  background-color: #000;
+  border: 0 none;
+}
+
+table {
+  margin: 0 auto 1rem;
+  border-collapse: collapse;
+  border-spacing: 0;
+  page-break-inside: avoid;
+}
+
+thead th, tbody td {
+  padding: 0.2rem 0.5rem;
+  text-align: start;       /* 表の内容はデフォルトで左寄せ */
+}
+
+table > caption {
+  max-width: 100%;
+  caption-side: top;
+  text-align: center;
+  word-break: break-all;
+}
+
+thead th {
+  font-weight: 700;
+  border-top: 2.5px solid black;
+  border-bottom: 1px solid black;
+}
+
+tbody tr:last-child td {
+  border-bottom: 1px solid black;
+}
+
+.center-h       { margin: 0 auto; }
+.center-v       { margin: auto 0; }
+
+dl dt {
+  font-weight: 700
+}
+
+dl dd {
+  margin: 0 0 0 2em;
+}
+
+
+pre, pre[class*="language-"], pre[class*="language-"] code {
+  white-space: pre-wrap; 
+  word-break: break-all;
+  word-wrap: break-word; /* for Kindle */
+  overflow-wrap: break-word;
+
+  /* プレビュー画面で言語指定ありのコードブロックの文字色がVSCodeの色になる問題の措置 */
+  color: inherit;
+}
+
+pre, pre[class*="language-"] {
+  border: 1px solid #999;
+  padding: 1em;
+}
+
+pre[data-line] {
+  padding: 1em 0 1em 3em;
+}
+
+code {
+  /* プレビュー画面で言語指定ありのコードブロックの文字色がVSCodeの色になる問題の措置 */
+  color: inherit;
+}
+
+/*
+pre[data-line] .line-highlight::before {
+  top: 0;
+  background-color: hsl(24deg 20% 70%);
+}
+
+pre[data-line] .line-highlight[data-end]::after {
+  bottom: 0;
+  background-color: hsl(24deg 20% 70%);
+}
+*/
+
+kbd {
+  color: #030303;
+  border: 1px solid #d6d6d6;
+  border-bottom: 2px solid #c7c7c7;
+  padding: 2px 4px;
+  background-color: #f0f0f0;
+  border-radius: 3px
+}
+
+
+
+
+figure {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0 0 1rem;
+  page-break-inside: avoid;
+}
+
+figure img {
+  /* img単体ではfigcaptionが表示される前提でマージンを指定。 デフォルトで .x-xl */
+  display: block;
+  margin: auto auto 0;
+  width: 100%;
+  height: auto;
+}
+
+figure figcaption {
+  display: block;
+  width: 100% !important;
+  margin: 0 auto auto;
+  text-align: center;
+}
+
+.float-left {
+  float: left;
+  margin: 0.2rem 0.8rem 0.2rem 0;
+}
+
+.float-right {
+  float: right;
+  margin: 0.2rem 0 0.2rem 0.8rem;
+}
+
+.float-left figure, .float-right figure {
+  margin: 0;
+}
+
+.float-left figure img, .float-right figure img {
+  width: 100%;
+  height: auto;
+  margin: 0;
+}
+
+.float-left figure figcaption, .float-right figure figcaption {
+  /* figcaptionが有効だとfloatが解除される場合があるようなのでfloat時はnoneを指定 */
+  display: none;
+}
+
+.x-ss, .xSmall  { width:  40%; height: auto; }
+.x-s            { width:  50%; height: auto; }
+.x-l, .xLarge   { width:  60%; height: auto; }
+.x-ll, .xLLarge { width:  80%; height: auto; }
+.x-xl, .xXLarge { width: 100%; height: auto; }
+
+.y-ss, .ySmall  { width: auto; height:  40%; }
+.y-s            { width: auto; height:  50%; }
+.y-l, .yLarge   { width: auto; height:  60%; }
+.y-ll, .yLLarge { width: auto; height:  80%; }
+.y-xl, .yXLarge { width: auto; height: 100%; }
+
+.hidden-caption figure img {
+  /* figcaptionを表示しない場合のマージンを指定 */
+  margin: auto;
+}
+
+.hidden-caption figure figcaption {
+  display: none;
+}
+
+/* 数式をPandoc拡張のdiv記法で:::mathと:::で囲った場合のスタイル */
+
+.math dl {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.math dl dt {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+
+  /* ddの幅次第 */
+  width: auto;
+}
+
+.math dl dd {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: end;
+
+  /* ddの幅を最小限にする */
+  width: 1%;
+  white-space: nowrap;
+}
+
+.markdown-preview mark {
+  /* 蛍光ペン風 */
+  background: linear-gradient(transparent 50%, #FFFF40 50%) !important;
+}
+
+/* 青空文庫的拡張に関係するスタイル */
+
+ruby {
+  ruby-position: over;
+  ruby-align: space-around;
+  white-space: normal;
+}
+
+span.notes {
+  /* 縦書きがオリジナル */
+  font-size: 0.8em;         /* 本文より少し小さめ */
+  color: #666;            /* グレー系で目立たないように */
+  vertical-align: super;    /* 上付きで注記風に表示 */
+  margin-bottom: 0.1em;       /* 本文と少し間隔 */
+}
+
+.chitsuki {
+  /* 縦書きがオリジナル */
+  text-align: end;
+  margin-right: 0;
+}
+
+.chiyose {
+  /* 縦書きがオリジナル */
+  text-align: end;
+  margin-right: 3em;
+}
+
+/* 表紙ページがある場合のスタイル */
+
+#cover {
+  width: 100%;
+  height: 100%;
+}
+
+#cover-image {
+  /* 縦長のカバー画像を使用して縦いっぱいにあわせる */
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0 auto;
+}
+
+/* 文字タイトルページがある場合のスタイル */
+
+.titlepage {
+  display: none;  /* 文字タイトルページを使う場合は display: block; */
+}
+
+/*
+  次の場合の目次の記号・スタイルを変更
+    - Pandoc拡張のdiv記法によりpdf-tocの名前で目次が囲まれている場合
+    - EPUB電子書籍のnavigation.xhtmlのTOC（#toc）の場合
+*/
+
+.pdf-toc ul, #toc > ol {
+  padding: 0 0 0 2em;
+}
+
+.pdf-toc > ul, #toc > ol {
+  margin: 0 0 1em;
+  padding: 0;
+}
+
+
+
+.pdf-toc,
+.pdf-toc ul {
+  list-style: none;
+}
+
+.pdf-toc ul, .pdf-toc li, #toc ol, #toc li {
+  list-style-type: none;
+}
+
+.pdf-toc .toc-link-wrapper:has(>*:nth-child(2)) {
+  /* 目次の項に目次のドットラインとページ番号の要素があるとき */ 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pdf-toc .toc-link-wrapper a {
+  margin: auto 1em auto auto;
+}
+
+.pdf-toc .toc-link-wrapper .toc-leader {
+  flex: 1 0 auto;
+  border-bottom: 1px dotted #333;
+}
+
+.pdf-toc .toc-link-wrapper .toc-page {
+  text-align: right;
+  min-width: 2em;
+}
+
+/* 縦書きの指定 */
+
+html body { /* 縦書本番では html body とする */
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  text-combine-upright: digits;
+  line-height: 2.0;
+}
+
+.select-none {        /* MPEメニュー系 */
+  writing-mode: initial;
+}
+
+
+/* 縦書き用 ここから */
+
+ h1,  h2,  h3,  h4,  h5,  h6 {
+  margin-top: revert;
+  margin-bottom: revert;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+ .page-break {
+  margin-top: revert;
+  margin-right: 0;
+}
+
+ h1 {
+  font-size: 1.8rem;
+  margin: 0 0 0 1rem;
+  border-bottom: revert;
+  border: none;
+}
+
+ h2 {
+  font-size: 1.2rem;
+  border-bottom: revert;
+  border: none;
+  line-height: 4.0;
+}
+
+ h2:not(.no-page-break) {  /* 定義順で上書きするよう修正する */
+  margin: 0 1.0rem;
+}
+
+ h2.no-page-break {
+  margin: 0 0 0 1.0rem;
+}
+
+ h3 {
+  font-size: 1.12rem;
+  margin: 0 0.5rem;
+  border: none;
+  line-height: 4.0;
+}
+
+ h4 {
+  font-size: 1.07rem;
+  line-height: 4.0;
+}
+
+ h5 {
+  font-size: 1.0rem;
+}
+
+ h6 {
+  font-size: 1.0rem;
+}
+
+ a {
+  color: #000;
+  text-decoration: none;  /* ignored on Kindle */
+}
+
+ a:hover {
+  color: #000;
+  text-decoration: none;  /* ignored on Kindle */
+}
+
+ p,  ol,  ul,  pre,  dl {
+  margin-top: revert;
+  margin-bottom: revert;
+  margin-right: 0;
+  margin-left: 1em;
+}
+
+ p {
+  /* 縦書き本文は字下げをデフォルトにする */ /* →<p>が組み込まれる個別の除去定義も必要 */
+  text-indent: 1em;
+}
+
+ .md-toc p,  li > p,  blockquote > p {
+  text-indent: 0;
+  margin-bottom: revert;
+  margin-left: 0;
+}
+
+/* 縦書きプレビュー・エクスポートのスタイル */
+ ol,  ul {
+  padding-left: revert;
+  padding-top: 2em;
+}
+
+ ol ol,  ol ul,  ul ol,  ul ul {
+  margin-top: revert;
+  margin-bottom: revert;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+ ol {
+  list-style: cjk-ideographic !important;
+}
+
+/* 縦書きEPUBのスタイル */
+ .unordered-list p,   .ordered-list p {
+  margin: 0;
+}
+
+ .unordered-list,   .ordered-list {
+  margin: 1em 0 0;
+}
+
+ section > .unordered-list,   section > .ordered-list {
+  margin-top: 2em;
+  margin-left: 1em;
+}
+
+ .list-item {
+  margin: 0;
+}
+
+ .task-list-item-checkbox {
+  margin: -2em 0 0;
+}
+
+ blockquote {
+  margin: 2em 0 0 1em;
+  padding: 0.6rem 0;
+  background: none;
+  border: none;
+}
+
+ hr {
+  height: 100%;
+  width: 2px;
+  background-color: #000;
+  margin: 0 1rem;
+}
+
+ dl dd {
+  margin: 2em 0 0;
+}
+
+ kbd {
+  border-bottom: revert;
+  border-left: 2px solid #c7c7c7;
+  padding: 4px 2px;
+}
+
+
+
+ figure {
+  margin: 0 0 0 1rem;
+}
+
+ figure img {
+  margin: auto auto auto 0;
+  width: auto;
+  height: 100%;
+}
+
+ figure figcaption {
+  margin: auto 0 auto auto;
+}
+
+ .float-left {
+  float: left;
+  margin: 0 0.2rem 0.8rem;
+}
+
+ .float-right {
+  float: right;
+  margin: 0.8rem 0.2rem 0;
+}
+
+ .float-left figure,  .float-right figure {
+  margin: 0;
+}
+
+ .float-left figure img,  .float-right figure img {
+  width: auto;
+  height: 100%;
+  margin: 0;
+}
+
+ .x-ss,  .xSmall  { width: auto; height:  40%; }
+ .x-s                      { width: auto; height:  50%; }
+ .x-l,  .xLarge   { width: auto; height:  60%; }
+ .x-ll,  .xLLarge { width: auto; height:  80%; }
+ .x-xl,  .xXLarge { width: auto; height: 100%; }
+
+ .y-ss,  .ySmall  { width:  40%; height: auto; }
+ .y-s                      { width:  50%; height: auto; }
+ .y-l,  .yLarge   { width:  60%; height: auto; }
+ .y-ll,  .yLLarge { width:  80%; height: auto; }
+ .y-xl,  .yXLarge { width: 100%; height: auto; }
+
+ table,  div.math,  pre {
+  writing-mode: horizontal-tb;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+ mark {
+  background: #999;
+}
+
+ span.notes {
+  font-size: 0.8em;
+  color: #666;
+  vertical-align: super;
+  margin-left: 0.1em;
+}
+
+ .chitsuki {
+  text-align: end;
+  margin-right: revert;
+  margin-bottom: 0;
+}
+
+ .chiyose {
+  text-align: end;
+  margin-right: revert;
+  margin-bottom: 3em;
+}
+
+ .pdf-toc ul, #toc > ol {
+  padding: 2em 0;
+}
+
+ .pdf-toc > ul, #toc > ol {
+  margin: 0 0 0 1em;
+}
+
+
+
+ .page-break {
+  margin-top: revert;
+  margin-right: 0;
+}
+
+/* 縦書き用 ここまで */
+
+#md-toc a::after, #import-toc a::after {
+  /* leader() と target-counter() を使って右側にページ番号を付ける */
+  content: leader("·") target-counter(attr(href url), page);
+  float: right;
+}
+
+.sage2 p { margin-left: 2em; }
+.sage3 p { margin-left: 3em; }
+.sage4 p { margin-left: 4em; }
+
+/* Kindle Background Colors for test */
+.white {background: #FFF;}
+.sepia {background: #FBF0D9;}
+.green {background: #C5E7CE;}
+.black {background: #000;}
+
+/* for paging test */
+body .all-area {
+  background-color: #FFFFF8;
+  border: 2px solid #000;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, pre, figure, table, .page-center, .column-all {
+  @media print {
+    column-span: all;
+  }
+}
