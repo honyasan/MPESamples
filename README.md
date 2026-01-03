@@ -2,40 +2,106 @@
 
 ## 概要
 
-このプロジェクトは、Kindle本「Visual Studio CodeとマークダウンでKindle本を出版しよう！」の解説に利用したマークダウンのサンプルである。
+このプロジェクトは、Kindle本「Visual Studio CodeとマークダウンでKindle本を出版しよう！」の解説に利用したマークダウンのサンプルです。
 
-まず、VSCode × MPE で実際に出力したファイルがどのようなものになるか、assetsサブフォルダの各ファイルを見てもらうのが良いだろう。
+まず、VSCode × MPE で実際に出力したファイルがどのようなものになるか、assetsサブフォルダの各ファイルを見るとよいでしょう。
 
-画面右上の「<>CODE」をクリックすると、zipファイルでまとめてダウンロードできる。
+ファイル一式は、画面右上の「<>CODE」をクリックすると、zipファイルでまとめてダウンロードできます。
 
-以下に詳細を記載する。
+以下に詳細を記載します。
 
 ## 各フォルダについて
 
-- tategaki_kindle　縦書きの例
-- tategaki_ruby_kindle　parser.jsによるルビ・傍点の実現例（縦書き）
-- yokogaki_chouhen_kindle　長編（複数mdファイル）の使用例
-- yokogaki_kindle　横書きで、PandocによりKindle Previewerを前提にしたEUB形式を得る場合の例
-- yokogaki_minutes_pdf　議事録をイメージした簡素なスタイルの場合の例
-- yokogaki_pdf　横書きで、Chrome(puppeteer)によりPDF形式を得る場合の例
-- yokogaki_pdf2　横書きで、Chrome(puppeteer)によりPDF形式を得る場合の例。章節項図表式への番号付与あり。
-- yokogaki_plane_pdf　横書きで、スタイルシートを空にした場合の例
+|           フォルダ名           |                 説明                 |
+| :----------------------------- | :----------------------------------- |
+| type1_report                   | レポート風・見出し深さ２まで         |
+| type2_report_long              | レポート風・見出し深さ３まで         |
+| type3_non_fiction              | ノンフィクション風                   |
+| type4_non_fiction_wo_numbering | ノンフィクション風・ナンバリングなし |
+| type5_fiction                  | フィクション風                       |
+| type6_tategaki_fiction         | 縦書き・フィクション風（試験段階）   |
+| type7_paper_like               | 論文風（出力はPDFのみ）              |
+| scripts                        | 関連スクリプト                       |
 
-## サブフォルダについて
+## type1からtype7の各フォルダについて
 
-- .crossnote　VSCode×MPEで参照されるワークスペース毎のファイル。主にスタイルをあてている。
-- .vscode　使用したVSCodeのワークスペースの設定
-- assets　実際に出力したファイル
+次のファイルがあります。
 
-## その他
+- .crossnote　MPEの関連ファイル
+  - config.js　MPEのファイル（初期状態のまま）
+  - head.html　MPEのファイル（初期状態のまま）
+  - parser.js　MPEのファイルで、和文用にマークダウンをカスタマイズするJavaScript
+  - style.les　MPEのファイルで、CSSにより各種スタイルを指定している
+- assets　MPEから実際に出力したファイル（HTML/EPUB/PDF）
+- mpee.lua　MPEからEPUBを出力する動作をカスタマイズするLuaスクリプト
+- test.md　サンプルのマークダウン
+- .jpg, .png　サンプル画像
 
-これらのサンプルは厳格なCSSではなく（テーマをリセットしない）、VSCodeの次のテーマ設定の影響を受ける。
+次のようにファイルを確認すると効率がよいでしょう。
 
-- Markdown-preview-enhanced: Preview Theme
+1. assetsフォルダのファイルを見て、目的の様式として十分かを確認する。
+1. VSCodeからフォルダをワークスペースとして開き、test.mdを変更してみる。
 
-KDPではライト系とダーク系のどちらにも切替できること、という要件があり、「リーダーの設定」に影響を受けるようにしている。
-ライト系とダーク系と両方に適用しやすいスタイルにしたつもりではあるが、印刷などを考慮してどちらかというとライト系のテーマの方が違和感がないだろう。
-もし普段使用しているテーマがダーク系なら、制作で使用した atom-light を選択してみて欲しい。
+## scriptフォルダについて
+
+|      ファイル名       |                            説明                            |
+| :-------------------- | :--------------------------------------------------------- |
+| GetFontFamily.ps1     | フォントファミリ名を表示するPowerShellスクリプト           |
+| GetFontFamilySjis.ps1 | フォントファミリ名を表示するPowerShellスクリプト（SJIS用） |
+| parser_debug.js       | parser.jsのデバッグ版                                      |
+| parser_tester.js      | parser.jsのデバッグ用起動スクリプト                        |
+| collectTocPage.js     | HTMLとPDFを突合して目次の対象ページを調べるツール          |
+| pdfinfo.js            | PDFファイル中の画像の解像度を調べるツール                  |
+
+## GetFontFamilyスクリプトについて
+
+インストール済みフォントのフォントファミリ名を表示するPowerShellスクリプトです。  
+PowerShellを開き、以下のようにスクリプトを実行します。
+
+```PowerShell
+> cd （GetFontFamily.ps1があるディレクトリ）
+> .\GetFontFamily.ps1
+```
+
+文字コードがShiftJISの環境で正常に動作しない場合は、代わりにGetFontFamilySjis.ps1を実行してください。
+
+## parser.jsのデバッグ環境について
+
+VSCodeからparser_test.jsを起動すると、parser_debug.js内の関数を呼び出してデバッグできます。  
+デバッグ用のファイルは、testサブフォルダに配置します。
+
+テストデータはonWillParseMarkdown、onDidParseMarkdown関数の入口で`throw new Error(markdown);`を有効にすると、MPEから呼び出された際のデータをテキストでキャッチして利用できます。
+
+## collectTocPage.jsについて
+
+1. マークダウンに@import [TOC]形式により目次を埋め込ませます。
+1. 目次を`:::pdf-toc`と`:::`で囲みます。
+1. MPEからHTML出力します。
+1. MPEからPDF出力します。
+1. 以下のように実行します。
+
+```PowerShell
+> node collectTocPage.js test.html -p test.pdf
+```
+
+正常にスクリプトが起動すると、HTMLを読み込んで目次を解析します。  
+次にPDFを読み込んで、目次の項目に対応するページを調査し、出力します。
+
+スクリプトの起動で試行錯誤するより、手作業で目次の番号を調べて付与した方が早いでしょう。  
+参考のために公開しています。
+
+## pdfinfo.jsについて
+
+Popplerを利用して、PDFファイル中の画像の解像度を調査するスクリプトです。
+
+1. Popplerをインストールします。
+1. 以下のように実行します。
+
+```PowerShell
+> node pdfinfo.js test.pdf -p C:\Uty\poppler
+```
+
+参考のために公開しています。
 
 ## ライセンスについて
 
