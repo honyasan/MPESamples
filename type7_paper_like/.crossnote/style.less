@@ -303,7 +303,7 @@ h1.unnumbered {
 
 .page-break {             /* その他のヘッダを強制ページ送りする　印刷時の調整用 */
   @media print {
-    display: block;
+    display: table;
     page-break-before: always;
     break-before: always;
     margin-top: 0;
@@ -551,6 +551,15 @@ figure figcaption {
   text-align: center;
 }
 
+figure img.hidden-caption {
+  /* figcaptionを表示しない場合のマージンを指定 */
+  margin: auto;
+}
+
+figure img.hidden-caption + figcaption {
+  display: none;
+}
+
 .float-left {
   float: left;
   margin: 0.2rem 0.8rem 0.2rem 0;
@@ -587,15 +596,6 @@ figure figcaption {
 .y-l, .yLarge   { width: auto; height:  60%; }
 .y-ll, .yLLarge { width: auto; height:  80%; }
 .y-xl, .yXLarge { width: auto; height: 100%; }
-
-.hidden-caption figure img {
-  /* figcaptionを表示しない場合のマージンを指定 */
-  margin: auto;
-}
-
-.hidden-caption figure figcaption {
-  display: none;
-}
 
 /* 数式をPandoc拡張のdiv記法で:::mathと:::で囲った場合のスタイル */
 
