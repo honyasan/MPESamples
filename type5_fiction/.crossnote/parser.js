@@ -15,6 +15,10 @@
     defaultsOptions = {
       custom: { // カスタムを使用
         name: 'custom settings',
+        enableNumbering: false,
+        enableDetailNumbering: false,
+        aozoraRuby: true,
+        indentString: ''
       },
       type0: {  // デフォルトを使用
         name: 'default settings',
@@ -971,6 +975,11 @@
     defaultsOptions = {
       custom: { // カスタムを使用
         name: 'custom settings',
+        headFrom: 'h2',
+        headDepth: 2,
+        classPrefixList: ['chapter', 'section'],
+        headerType: 'outside',
+        headerTitle: 'chapter'
       },
       type0: {  // デフォルトを使用
         name: 'default settings',
