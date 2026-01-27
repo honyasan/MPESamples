@@ -6,10 +6,11 @@ const cheerio = require('cheerio');
 const pdfjsLib = require('pdfjs-dist/build/pdf.js');
 pdfjsLib.GlobalWorkerOptions.workerSrc = require.resolve('pdfjs-dist/build/pdf.worker.js'); // pdf.js のワーカー設定
 
-const scriptVersion = 'v1.00.000';
+const scriptVersion = 'v1.00.001';
 
-const pageBefore = ' <span>';
-const pageAfter = '</span>';
+const tocSelector = '.pdf-toc';
+const pageBefore = ' p.';
+const pageAfter = '';
 
 function parseToc(foundItems, $, elem) {
   const href = $(elem).attr('href');
@@ -37,8 +38,7 @@ async function collectTocPage() {
   });
   if (!tocItems.length){
     console.log('Checking syntax of @import "[TOC]".');
-    const test = $('#目次 ul').first().find('li > a');
-    $('#目次 ul').first().find('li > a').each(function (i, elem) {
+    $(`${tocSelector} ul li a`).each(function (i, elem) {
       parseToc(tocItems, $, elem);
     });
     if (!tocItems.length) {
