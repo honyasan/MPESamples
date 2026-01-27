@@ -160,6 +160,12 @@ Popplerを利用して、PDFファイル中の画像の解像度を調査する�
 
 参考のために公開しています。
 
+## 書籍について
+
+全般的な、より詳しい解説は、以下のKindleのリフロー型電子書籍とペーパーバックを参照してください。
+
+[Visual Studio CodeとマークダウンでKindle本を出版しよう！: VSCode×MPE×Pandocで作るKindle本](https://read.amazon.co.jp/sample/B0DRS3FM5V?clientId=share)
+
 ## ライセンスについて
 
 このプロジェクトは、MITライセンスのもとで公開されています。詳細はLICENSEファイルをご覧ください。
