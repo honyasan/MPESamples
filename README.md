@@ -1,9 +1,9 @@
 # MPESamples
 
 > [!IMPORTANT]
-> MPE 0.8.23で、usePandocオプションが廃止され、markdownParserでパーサーを選択する仕様に変更になりました。
-> 設定が初期化されています。
-> markdownParserをpandocに指定してMPESamplesを利用してください。
+> MPE 0.8.23で、usePandocオプションが廃止され、markdownParserでパーサーを選択する仕様に変更になりました。  
+> 設定が初期化されています。  
+> markdownParserをpandocに指定してMPESamplesを利用してください。  
 
 ## 概要
 
