@@ -3,7 +3,9 @@
 > [!IMPORTANT]
 > MPE 0.8.23で、usePandocオプションが廃止され、markdownParserでパーサーを選択する仕様に変更になりました。  
 > 設定が初期化されています。  
-> markdownParserをpandocに指定してMPESamplesを利用してください。  
+> markdownParserをpandocに指定する必要があります。
+> ただし、マークダウンの動作が変更になっており、「:::」がdivで出力されません。
+> 従来通りに動作させるためには、MPE 0.8.22を使用してください。
 
 ## 概要
 
