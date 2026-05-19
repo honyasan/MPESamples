@@ -3,6 +3,7 @@ local log_file = 'mpee.log'
 
 local convert_list = false
 local remove_div_classes = {}
+local remove_br_in_header = false
 
 ------ debug tools from ------
 local space = ' '
@@ -299,7 +300,7 @@ function Meta(meta)
 
 
   if meta.convert_list_to_div then
-    logger('test = '..tostring(meta.convert_list_to_div))
+    logger('meta.convert_list_to_div = '..tostring(meta.convert_list_to_div))
     convert_list = arg_bool(meta.convert_list_to_div, convert_list)
   end
 
@@ -307,11 +308,17 @@ function Meta(meta)
     remove_div_classes = arg_table(meta.remove_div_class_name, remove_div_classes)
   end
 
+  if meta.remove_br_in_header then
+    logger('meta.remove_br_in_header = '..tostring(meta.remove_br_in_header))
+    remove_br_in_header = arg_bool(meta.remove_br_in_header, remove_br_in_header)
+  end
+
   logger('Working with the following settings:')
   logger('convert_list_to_div = '..tostring(convert_list))
   for i, value in ipairs(remove_div_classes) do
     logger('remove_div_class_name['..i.. '] '..value)
   end
+  logger('remove_br_in_header = '..tostring(remove_br_in_header))
   logger('')
 
   return meta
@@ -378,6 +385,37 @@ local function kanji_numerals(number, type, delimiter)
 end
 
 local list_filter = {
+  Header = function(elem)
+    --logger('walk Header')
+    --logger(dump_obj(elem, 'list_filter.Header.elem'))
+    -- 動作オプションが無効なときは丸々返して変更しない
+    if not remove_br_in_header then return elem end
+
+    local new_content = {}
+    for _, inline in ipairs(elem.content) do
+      local is_br = false
+      
+      -- Markdownの改行記号（末尾スペース2つなど）によるPandocの改行要素
+      if inline.t == 'LineBreak' then
+        logger('remove LineBreak in header')
+        is_br = true
+      -- 直接入力されたHTMLの <br> タグの場合（<BR>, <br/>, <br /> などに対応）
+      elseif inline.t == 'RawInline' and inline.format:match('html') then
+        if inline.text:lower():match('<br%s*/?>') then
+          logger('remove RawInline in header')
+          is_br = true
+        end
+      end
+
+      -- BRタグ以外のインライン要素のみを抽出して保持する
+      if not is_br then
+        table.insert(new_content, inline)
+      end
+    end
+    elem.content = new_content
+    return elem
+  end,
+
   BulletList = function(elem)
     --logger('walk BulletList')
     --logger(dump_obj(elem, 'list_filter.BulletList.elem'))
