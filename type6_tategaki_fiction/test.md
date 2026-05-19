@@ -58,7 +58,7 @@ output:
 
 これはサンプルファイルです。
 
-:::-column
+::::::-column
 
 ## 見出しレベル２{#midashi_level_2-1}
 
@@ -162,9 +162,7 @@ output:
 
 画像のサンプル。
 
-:::hidden-caption
-![幅・特小の表示](sample.jpg){.x-ss}
-:::
+![幅・特小の表示](sample.jpg){.x-ss .hidden-caption}
 
 あいうえお
 
@@ -176,15 +174,11 @@ output:
 
 あいうえお
 
-:::hidden-caption
-![幅・特大の表示](sample.jpg "図マウスオーバータイトル"){.x-ll}
-:::
+![幅・特大の表示](sample.jpg "図マウスオーバータイトル"){.x-ll .hidden-caption}
 
 あいうえお
 
-:::hidden-caption
-![全幅の表示](sample.jpg "図マウスオーバータイトル"){.x-xl}
-:::
+![全幅の表示](sample.jpg "図マウスオーバータイトル"){.x-xl .hidden-caption}
 
 あいうえお
 
@@ -808,7 +802,7 @@ A.I. 《人工知能》がおかしな結果を返すごとに思い出す｜ Ar
 ９０１２３４５６７８  
 ０１２３４５６７８９  
 
-:::
+::::::
 
 ### おわりに {#owarini ignore=true .noNumbering}
 

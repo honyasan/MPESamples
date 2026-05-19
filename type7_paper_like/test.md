@@ -34,6 +34,8 @@ output:
 ---
 # チートシート {.center-h-text}
 
+::::::article-header
+
 ::: {.author}
 
 サンプルマン
@@ -52,9 +54,11 @@ sample man
 
 :::
 
+::::::
+
 Description
 
-:::column
+::::::column
 
 ## はじめに
 
@@ -162,9 +166,7 @@ Description
 
 画像のサンプル。
 
-:::hidden-caption
-![幅・特小の表示](sample.jpg){.x-ss}
-:::
+![幅・特小の表示](sample.jpg){.x-ss .hidden-caption}
 
 あいうえお
 
@@ -176,15 +178,11 @@ Description
 
 あいうえお
 
-:::hidden-caption
-![幅・特大の表示](sample.jpg "図マウスオーバータイトル"){.x-ll .column-all}
-:::
+![幅・特大の表示](sample.jpg "図マウスオーバータイトル"){.x-ll .hidden-caption .column-all}
 
 あいうえお
 
-:::hidden-caption
-![全幅の表示](sample.jpg "図マウスオーバータイトル"){.x-xl .column-all}
-:::
+![全幅の表示](sample.jpg "図マウスオーバータイトル"){.x-xl .hidden-caption .column-all}
 
 あいうえお
 
@@ -814,4 +812,4 @@ A.I. 《人工知能》がおかしな結果を返すごとに思い出す｜ Ar
 
 - サンプル文献
 
-:::
+::::::
