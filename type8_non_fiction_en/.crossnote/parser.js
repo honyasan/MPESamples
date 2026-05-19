@@ -9,7 +9,7 @@
     // ここから
 
     // 動作オプションの選択
-    selectedOptionType = 'type7';
+    selectedOptionType = 'type8';
 
     // 動作オプションの定義
     defaultsOptions = {
@@ -996,7 +996,7 @@
     // ここから
 
     // 動作オプションの選択
-    selectedOptionType = 'type7';
+    selectedOptionType = 'type8';
 
     // 動作オプションのパターン
     defaultsOptions = {

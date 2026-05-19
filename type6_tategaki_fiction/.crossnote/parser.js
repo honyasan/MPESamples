@@ -124,6 +124,33 @@
 
         aozoraRuby: true
       },
+      type7: { // 論文風（PDF出力のみ）
+        name: 'Japanese article',
+        enableNumbering: true,
+        headFrom: 'h2',
+        headDepth: 1,
+        headFormat: [
+          '{num}'
+        ],
+        classPrefixList: ['chapter'],
+        combineTitle: false,
+        endOfOutline: '　',
+
+        enableDetailNumbering: true,
+        isThroughOut: true,
+        figurePrefix: 'Fig. ',
+        tablePrefix: 'Table ',
+        mathPrefix: 'Eq. ',
+        detailFormat: '{num}',
+      }, 
+      type8: {  // ノンフィクション風・ナンバリングなし・洋書
+        name: 'Non-fictions(no-numbering) En',
+        enableNumbering: false,
+        enableDetailNumbering: false,
+        aozoraRuby: false,
+        indentString: '　　',
+        excludeIndentClasses: ['page-center', 'page-end']
+      },
       typeX: {  // バイパス
         name: 'bypass true',
         isBypass: true
@@ -303,8 +330,8 @@
           // pandoc拡張divブロック
           // マークダウンにない階層構造を作らないように開始行・終了行だけで
           // ノードにする
-          if (/^:::/.test(t)) {
-            const nodeType = /^:::$/.test(t) ? 'container-end' : 'container';
+          if (/^[:]{3,}/.test(t)) {
+            const nodeType = /^[:]{3,}$/.test(t) ? 'container-end' : 'container';
             const buf = [];
             buf.push(lines[i++]);     // 開始行または終了行
             nodes.push(new Node(nodeType, buf.join('\n')));
@@ -346,7 +373,7 @@
       }
 
       isBlockBoundaryToken(testString) {
-        return /^(:::|#{1,6}\s|---|===|>|\s{4,}|`{3,}|~{3,}|!\[|\[TOC\]|<!--\s|\|.*\||.*\|.*|\$\$|([-\*_]\s?){3,}|[-|\*|\+]\s|1.\s|\[\^[0-9]+?\]:|!!!\s|@import\s)/.test(testString);
+        return /^([:]{3,}|#{1,6}\s|---|===|>|\s{4,}|`{3,}|~{3,}|!\[|\[TOC\]|<!--\s|\|.*\||.*\|.*|\$\$|([-\*_]\s?){3,}|[-|\*|\+]\s|1.\s|\[\^[0-9]+?\]:|!!!\s|@import\s)/.test(testString);
       }
 
       toString() {
@@ -357,7 +384,7 @@
         // 行の種類を判別して返す　ブロック要素はparse関数の判断による
         // 行頭の空白、改行、\rを除去してチェック
         const block = raw.trim();
-        if (/^:::/.test(block)) {
+        if (/^[:]{3,}/.test(block)) {
           return 'container';   // pandoc拡張のdivコンテナ
         }
         else if (/^#{1,6}\s/.test(block)) {
@@ -496,16 +523,16 @@
 
           if (node.type === 'container') {
             const lineText = node.toString();
-            const divStyleMatch = lineText.match(/^:::([^\s\{]+)/);
+            const divStyleMatch = lineText.match(/^[:]{3,}([^:\s\{]+)/);
             if (divStyleMatch) {
               divStack.push(divStyleMatch[1]);
             }
 
             let classList = [];
-            let regex = /\.(\w[\w-]*)/g
+            let regex = /(?<=\.)\w[-\w]*/g
             let spanStyleMatch;
             while ((spanStyleMatch = regex.exec(lineText)) !== null) {
-              classList.push(spanStyleMatch[1]);
+              classList.push(spanStyleMatch[0]);
             }
             if (classList.length > 0) {
               divStack.push(classList.join(' '));
@@ -1033,6 +1060,22 @@
         classPrefixList: ['chapter', 'section'],
         headerType: 'none',
         pageProgressionDirection: 'rtl'
+      },
+      type7: { // 論文風(PDF出力のみ)
+        name: 'Japanese article',
+        headFrom: 'h2',
+        headDepth: 1,
+        classPrefixList: ['chapter'],
+        headerType: 'center',
+        headerTitle: 'none',
+      },
+      type8: {  // ノンフィクション風・ナンバリングなし・洋書
+        name: 'Non-fictions(no-numbering) En',
+        headFrom: 'h2',
+        headDepth: 2,
+        classPrefixList: ['chapter', 'section'],
+        headerType: 'outside',
+        headerTitle: 'none'
       },
       typeX: {  // バイパス
         name: 'bypass true',

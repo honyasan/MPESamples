@@ -30,7 +30,7 @@ html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sideba
   transform: revert;
 }
 
-html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview {
+html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview.vertical {
   width: auto;
   height: 100%;
 }
@@ -67,14 +67,12 @@ pre>code.sourceCode>span {
   --page-width: 148mm;      /* ページの幅 */
   --page-height: 210mm;     /* ページの高さ */
 
-/*  --page-width: 148mm;
-  --page-height: 210mm; */
   --top-margin: 17.0mm;     /* 天マージン */
   --bottom-margin: 15.0mm;  /* 地マージン */
   --outer-margin: 15.0mm;   /* 外側マージン */
   --inner-margin: 15.0mm;   /* 内側（ノド）マージン */
   --content-max-block-size: calc(var(--page-width) - var(--inner-margin) - var(--outer-margin));
-  --serif-set: 'UD Digi Kyokasho N-R', serif;
+  --serif-set: 'Gentium Book Basic', 'GenEi Koburi Mincho v6', serif;
   --sans-serif-set: 'PlemolJP HS', 'BIZ UDGothic', sans-serif;
   --codeblock-set: 'PlemolJP HS', sans-serif;
 
@@ -268,6 +266,7 @@ html body {
   word-break: normal;
   line-break: strict;
   word-wrap: break-word;
+  text-align: justify;    /* for English */
   /* overflow-wrap: anywhere; */
   /* hanging-punctuation: first allow-end; */ /* not supported */
   widows: 2;
@@ -295,7 +294,7 @@ h1.unnumbered {
 
 .page-break {             /* その他のヘッダを強制ページ送りする　印刷時の調整用 */
   @media print {
-    display: table;
+    display: block;
     page-break-before: always;
     break-before: always;
     margin-top: 0;
@@ -303,12 +302,11 @@ h1.unnumbered {
 }
 
 h1, h2 {
-  font-size: 2.0em;       /* 1.2rem, 1.6rem */
+  font-size: 1.6em;
   font-weight: 600;
-  border: solid 0px #2f51b4;
-  border-radius: 10px;
   margin: 1.5rem 0;
-  padding: 0.5rem 0 0.5rem 0.25rem;
+  padding: 0.5rem 0;
+  text-align: center;
 }
 
 h2:not(.page-break) {
@@ -327,25 +325,28 @@ h3 {
   font-size: 1.4em;       /* 1.12rem, 1.4rem */
   font-weight: 600;
   display: inline-block;  /* kindle is not supported ? */
-  border-bottom: solid 0rem #2f51b4;
   margin: 1rem 0;
+  text-align: left;
 }
 
 h4 {
   font-size: 1.25em;      /* 1.07rem, 1.25rem */
   font-weight: 600;
   line-height: 4.0;
+  text-align: left;
 }
 
 h5 {
   font-size: 1.0em;
   font-weight: 600;
+  text-align: left;
 }
 
 h6 {
   font-size: 1.0em;
   font-weight: 600;
   color: #7e7e7e;
+  text-align: left;
 }
 
 del {
@@ -425,7 +426,7 @@ hr {
   width: 100%;
   height: 2px;
   margin: 1rem 0;
-  background-color: #000;
+  background-color: #2f51b4;
   border: 0 none;
 }
 
@@ -719,7 +720,7 @@ span.notes {
 
 /* 縦書きの指定 */
 
-html body { /* 縦書本番では html body とする */
+html body .vertical { /* 縦書本番では html body とする */
   writing-mode: vertical-rl;
   text-orientation: mixed;
   text-combine-upright: digits;
@@ -731,148 +732,147 @@ html body { /* 縦書本番では html body とする */
 }
 
 
-/* 縦書き用 ここから */
 
- h1,  h2,  h3,  h4,  h5,  h6 {
+.vertical h1, .vertical h2, .vertical h3, .vertical h4, .vertical h5, .vertical h6 {
   margin-top: revert;
   margin-bottom: revert;
   margin-right: 1rem;
   margin-left: 1rem;
 }
 
- .page-break {
+.vertical .page-break {
   margin-top: revert;
   margin-right: 0;
 }
 
- h1 {
+.vertical h1 {
   font-size: 1.8rem;
   margin: 0 0 0 1rem;
   border-bottom: revert;
   border: none;
 }
 
- h2 {
+.vertical h2 {
   font-size: 1.2rem;
   border-bottom: revert;
   border: none;
   line-height: 4.0;
 }
 
- h2:not(.no-page-break) {  /* 定義順で上書きするよう修正する */
+.vertical h2:not(.no-page-break) {  /* 定義順で上書きするよう修正する */
   margin: 0 1.0rem;
 }
 
- h2.no-page-break {
+.vertical h2.no-page-break {
   margin: 0 0 0 1.0rem;
 }
 
- h3 {
+.vertical h3 {
   font-size: 1.12rem;
   margin: 0 0.5rem;
   border: none;
   line-height: 4.0;
 }
 
- h4 {
+.vertical h4 {
   font-size: 1.07rem;
   line-height: 4.0;
 }
 
- h5 {
+.vertical h5 {
   font-size: 1.0rem;
 }
 
- h6 {
+.vertical h6 {
   font-size: 1.0rem;
 }
 
- a {
+.vertical a {
   color: #000;
   text-decoration: none;  /* ignored on Kindle */
 }
 
- a:hover {
+.vertical a:hover {
   color: #000;
   text-decoration: none;  /* ignored on Kindle */
 }
 
- p,  ol,  ul,  pre,  dl {
+.vertical p, .vertical ol, .vertical ul, .vertical pre, .vertical dl {
   margin-top: revert;
   margin-bottom: revert;
   margin-right: 0;
   margin-left: 1em;
 }
 
- p {
+.vertical p {
   /* 縦書き本文は字下げをデフォルトにする */ /* →<p>が組み込まれる個別の除去定義も必要 */
   text-indent: 1em;
 }
 
- .md-toc p,  li > p,  blockquote > p {
+.vertical .md-toc p, .vertical li > p, .vertical blockquote > p {
   text-indent: 0;
   margin-bottom: revert;
   margin-left: 0;
 }
 
 /* 縦書きプレビュー・エクスポートのスタイル */
- ol,  ul {
+.vertical ol, .vertical ul {
   padding-left: revert;
   padding-top: 2em;
 }
 
- ol ol,  ol ul,  ul ol,  ul ul {
+.vertical ol ol, .vertical ol ul, .vertical ul ol, .vertical ul ul {
   margin-top: revert;
   margin-bottom: revert;
   margin-right: 0;
   margin-left: 0;
 }
 
- ol {
+.vertical ol {
   list-style: cjk-ideographic !important;
 }
 
 /* 縦書きEPUBのスタイル */
- .unordered-list p,   .ordered-list p {
+.vertical .unordered-list p,  .vertical .ordered-list p {
   margin: 0;
 }
 
- .unordered-list,   .ordered-list {
+.vertical .unordered-list,  .vertical .ordered-list {
   margin: 1em 0 0;
 }
 
- section > .unordered-list,   section > .ordered-list {
+.vertical section > .unordered-list,  .vertical section > .ordered-list {
   margin-top: 2em;
   margin-left: 1em;
 }
 
- .list-item {
+.vertical .list-item {
   margin: 0;
 }
 
- .task-list-item-checkbox {
+.vertical .task-list-item-checkbox {
   margin: -2em 0 0;
 }
 
- blockquote {
+.vertical blockquote {
   margin: 2em 0 0 1em;
   padding: 0.6rem 0;
   background: none;
   border: none;
 }
 
- hr {
+.vertical hr {
   height: 100%;
   width: 2px;
   background-color: #000;
   margin: 0 1rem;
 }
 
- dl dd {
+.vertical dl dd {
   margin: 2em 0 0;
 }
 
- kbd {
+.vertical kbd {
   border-bottom: revert;
   border-left: 2px solid #c7c7c7;
   padding: 4px 2px;
@@ -880,97 +880,95 @@ html body { /* 縦書本番では html body とする */
 
 
 
- figure {
+.vertical figure {
   margin: 0 0 0 1rem;
 }
 
- figure img {
+.vertical figure img {
   margin: auto auto auto 0;
   width: auto;
   height: 100%;
 }
 
- figure figcaption {
+.vertical figure figcaption {
   margin: auto 0 auto auto;
 }
 
- .float-left {
+.vertical .float-left {
   float: left;
   margin: 0 0.2rem 0.8rem;
 }
 
- .float-right {
+.vertical .float-right {
   float: right;
   margin: 0.8rem 0.2rem 0;
 }
 
- .float-left figure,  .float-right figure {
+.vertical .float-left figure, .vertical .float-right figure {
   margin: 0;
 }
 
- .float-left figure img,  .float-right figure img {
+.vertical .float-left figure img, .vertical .float-right figure img {
   width: auto;
   height: 100%;
   margin: 0;
 }
 
- .x-ss,  .xSmall  { width: auto; height:  40%; }
- .x-s                      { width: auto; height:  50%; }
- .x-l,  .xLarge   { width: auto; height:  60%; }
- .x-ll,  .xLLarge { width: auto; height:  80%; }
- .x-xl,  .xXLarge { width: auto; height: 100%; }
+.vertical .x-ss, .vertical .xSmall  { width: auto; height:  40%; }
+.vertical .x-s                      { width: auto; height:  50%; }
+.vertical .x-l, .vertical .xLarge   { width: auto; height:  60%; }
+.vertical .x-ll, .vertical .xLLarge { width: auto; height:  80%; }
+.vertical .x-xl, .vertical .xXLarge { width: auto; height: 100%; }
 
- .y-ss,  .ySmall  { width:  40%; height: auto; }
- .y-s                      { width:  50%; height: auto; }
- .y-l,  .yLarge   { width:  60%; height: auto; }
- .y-ll,  .yLLarge { width:  80%; height: auto; }
- .y-xl,  .yXLarge { width: 100%; height: auto; }
+.vertical .y-ss, .vertical .ySmall  { width:  40%; height: auto; }
+.vertical .y-s                      { width:  50%; height: auto; }
+.vertical .y-l, .vertical .yLarge   { width:  60%; height: auto; }
+.vertical .y-ll, .vertical .yLLarge { width:  80%; height: auto; }
+.vertical .y-xl, .vertical .yXLarge { width: 100%; height: auto; }
 
- table,  div.math,  pre {
+.vertical table, .vertical div.math, .vertical pre {
   writing-mode: horizontal-tb;
   white-space: pre-wrap;
   overflow-wrap: break-word;
 }
 
- mark {
+.vertical mark {
   background: #999;
 }
 
- span.notes {
+.vertical span.notes {
   font-size: 0.8em;
   color: #666;
   vertical-align: super;
   margin-left: 0.1em;
 }
 
- .chitsuki {
+.vertical .chitsuki {
   text-align: end;
   margin-right: revert;
   margin-bottom: 0;
 }
 
- .chiyose {
+.vertical .chiyose {
   text-align: end;
   margin-right: revert;
   margin-bottom: 3em;
 }
 
- .pdf-toc ul, #toc > ol {
+.vertical .pdf-toc ul, #toc > ol {
   padding: 2em 0;
 }
 
- .pdf-toc > ul, #toc > ol {
+.vertical .pdf-toc > ul, #toc > ol {
   margin: 0 0 0 1em;
 }
 
 
 
- .page-break {
+.vertical .page-break {
   margin-top: revert;
   margin-right: 0;
 }
-
-/* 縦書き用 ここまで */
 
 #md-toc a::after, #import-toc a::after {
   /* leader() と target-counter() を使って右側にページ番号を付ける */
