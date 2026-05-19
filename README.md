@@ -105,6 +105,14 @@
 |                          |                                                                                                        |                    |
 | removeSpace              | 段落中の「。」に続く半角スペースを除去する                                                             | true or false      |
 
+### mpee.luaの呼び出し引数（YAML）
+
+|      YAMLでの引数指定例                     |                            説明                            |
+| :----------------------------------------- | :--------------------------------------------------------- |
+| '--metadata=remove_div_class_name:pdf-toc' | :::divブロックのpdf-tocクラスをepub出力から除外する           |
+| '--metadata=remove_br_in_header'           | 見出し中のBRタグを除去する。ナビゲーションに反映される。        |
+| '--metadata=convert_list_to_div'           | リストをdivブロックに変換する（縦書きの実験用）                |
+| '--lua-filter=mpee.lua'                    | mpee.luaを使用する（必須）                                   |
 
 ## scriptフォルダについて
 
