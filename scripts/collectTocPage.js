@@ -12,11 +12,25 @@ const tocSelector = '.pdf-toc';
 const pageBefore = ' p.';
 const pageAfter = '';
 
+function getLevel($, elem) {
+  if ($(elem).parent().attr('class') === 'md-toc-link-wrapper') {
+    // [toc]形式の場合
+    const level = $(elem).parent().attr('data-level');
+    return level ? Number(level) + 1 : 0;
+  }
+  else {
+    // import形式のtocの場合
+    const parents = $(elem).parents('li');
+    return parents.length;
+  }
+}
+
 function parseToc(foundItems, $, elem) {
   const href = $(elem).attr('href');
   const text = $(elem).find('p').text().trim() || $(elem).text().trim();
-  if (href && text) {
-    foundItems.push({ text: text, href: href, page: null });
+  const level = getLevel($, elem);
+  if (href && text && level) {
+    foundItems.push({ text: text, href: href, page: null, level: level });
     //console.log("TOC Item " + i + ":", href, text);
   }
 }
@@ -38,6 +52,7 @@ async function collectTocPage() {
   });
   if (!tocItems.length){
     console.log('Checking syntax of @import "[TOC]".');
+    // const test = $(`${tocSelector} ul`).first().find('li > a');
     $(`${tocSelector} ul li a`).each(function (i, elem) {
       parseToc(tocItems, $, elem);
     });
@@ -56,7 +71,7 @@ async function collectTocPage() {
     // pdf.jsでページ番号を取得
     console.log(`=== Identified Table of Contents ===`);
     for (const item of tocItems) {
-      const destName = item.href.slice(1); // 例: midashi_level_2-1
+      const destName = item.href.slice(1); // 例: #midashi_level_2-1 → midashi_level_2-1
       const destNameUri = encodeURI(destName);
 
       const dest = destinations[destNameUri];
@@ -70,7 +85,15 @@ async function collectTocPage() {
         continue;
       }
 
-      console.log(`- [${item.text}](#${destNameUri})${pageBefore}${pageIndex + 1}${pageAfter}`) ;  // 0ページ始まりなので1加える
+      let indentString = '';
+      for (let  count = 1; count < item.level; count++) {
+        indentString = indentString + '  ';
+      }
+
+      const headerText = item.text.replace(/\n/g, " "); // 例: 第４章\n見出し → 第４章 見出し
+
+      //console.log(`- [${item.text}](#${destNameUri})${pageBefore}${pageIndex + 1}${pageAfter}`) ;  // 0ページ始まりなので1加える
+      console.log(`${indentString}- [${headerText}](#${destName})${pageBefore}${pageIndex + 1}${pageAfter}`);  // 0ページ始まりなので1加える
     }
   }
   catch (error) {
