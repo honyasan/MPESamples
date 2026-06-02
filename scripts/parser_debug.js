@@ -1325,14 +1325,23 @@ async function onDidParseMarkdown(html) {
 
     }
 
+    isNoNumbering(classList) {
+      return this.classList.some(item => item === classList);
+    }
+
+    isWrappedInSection() {
+      const parent = this.parent;
+      if (!parent.isElement() && parent.tagName !== 'section') {
+        return false;
+      }
+      return this.attributes['data-source-line'] === parent.attributes['data-source-line'];
+    }
+
     wrapWithSiblingElements(wrapTag, tagName) {
       const parent = this.parent;
       if (!parent) {
         console.error('Error: Cannot wrap a node without a parent.');
         return;
-      }
-      if (!tagName) {
-        tagName = this.tagName;
       }
 
       // ラップするノードを収集
@@ -1354,8 +1363,12 @@ async function onDidParseMarkdown(html) {
         currentNode = parent.children[currentIndex + 1];
       }
 
-      // 新しいラッパー要素を作成
+      // 新しいラッパー要素を作成（data-source-line属性でマーキングする）
       const wrapperNode = HtmlParser.createElement(wrapTag);
+      const dataSourceLine = this.attributes['data-source-line'];
+      if (dataSourceLine) {
+        wrapperNode.setAttributes('data-source-line', dataSourceLine);
+      }
 
       // ラップ対象ノードを親から削除し、ラッパーノードの子として追加
       const startIndex = parent.children.indexOf(this);
@@ -1584,32 +1597,32 @@ async function onDidParseMarkdown(html) {
 
       const targetHeaders = parent.querySelectorAll(headTag);
       targetHeaders.forEach(header => {
-        const tagName = header.tagName;
-        let className = this.options.ignoreClass;
-        const attributes = JSON.stringify(header.attributes);
+        // sectionでラップ済みの場合は処理しない
+        if (header.isWrappedInSection()) {
+          return;
+        }
 
-        // 目次に列挙するhタグに、クラス名と、アウトラインをtitleに付ける
-        const isNoNumbering = header.classList.some(item => item === this.options.ignoreClass);
+        // hタグ以降の要素をsectionでラップする
+        const tagName = header.tagName;
+        if (!['h1', 'h2', 'h3', 'h4'].includes(tagName.toLowerCase())) {
+          console.error(`Error: wrapWithSiblingElements must be called on an h1~h4 tag, but was called on <${tagName}>`);
+        }
+        const wrapper = header.wrapWithSiblingElements('section', tagName);
+
+        // 目次に列挙するhタグをラップしたsectionに、関連情報を埋め込む
+        const attributes = JSON.stringify(header.attributes);
+        let className = this.options.ignoreClass;
+        const isNoNumbering = header.isNoNumbering(this.options.ignoreClass);
         if (!isNoNumbering) {
           const currentDepth = workingIndexList.length;
           const i = currentDepth - 1;
           className = `${this.options.classPrefixList[i]}${workingIndexList[i]}`;
-        }
-        console.log(`${tagName} ${className} ${attributes}`);
 
-        // hタグ以降の要素をsectionでラップする
-        const headerTags = ['h1', 'h2', 'h3', 'h4'];
-        if (!headerTags.includes(header.tagName.toLowerCase())) {
-          console.error(`Error: wrapWithSiblingElements must be called on an h1~h4 tag, but was called on <${header.tagName}>`);
-        }
-        const wrapper = header.wrapWithSiblingElements('section');
-
-        // 目次に列挙するhタグをラップしたsectionには、hタグの関連情報を埋め込む
-        if (!isNoNumbering) {
           wrapper.setClassList(className);
           wrapper.chapter = workingIndexList[0];
           wrapper.headerLevel = workingIndexList.length;
         }
+        console.log(`${tagName} ${className} ${attributes}`);
 
         // ナンバリングする深さの間、子レベルを再帰処理する
         const isLastDepth = !workingHeadList || workingHeadList.length === 0;
