@@ -127,11 +127,11 @@ Although the author and publisher have made every effort to ensure that the info
 
 :::
 
-## INTRODUCTION
+## INTRODUCTION {.page-break-common}
 
 This is for sample.
 
-## HEADER LEVEL2{#midashi_level_2-1}
+## HEADER LEVEL2 {#midashi_level_2-1 .page-break-common}
 
 ### Header Level3
 
@@ -155,7 +155,7 @@ This is for sample.
 
 #### Header Level4-4{#midashi_level_4-4}
 
-## MARKDOWN BASICS{#markdown_no_kakukihou}
+## MARKDOWN BASICS{#markdown_no_kakukihou .page-break-common}
 
 ### Emphasis{#kyouchou}
 
@@ -619,7 +619,7 @@ You can display examples.
 !!! Quote
 You can display quotes.
 
-## 青空文庫的拡張{#aozora}
+## 青空文庫的拡張{#aozora .page-break-common}
 
 青空文庫の記法の一部に対応（参考：青空文庫「ルビとルビのように付く文字」。縦書きの前提）。  
 一部に試験的な拡張された表現を含む場合があります。
@@ -700,7 +700,7 @@ A.I. 《人工知能》がおかしな結果を返すごとに思い出す｜ Ar
 
 - 傍線　→　１種類に制限されるが、強調*で代用
 
-## CONVERSATION
+## CONVERSATION {.page-break-common}
 
 Hanako said:
 Smiling.
@@ -724,7 +724,7 @@ Taro replied.
 Cheerfully.
 :::
 
-## For setting styles {#check_page}
+## For setting styles {#check_page .page-break-common}
 
 ### Checking font characteristics {#check_fonts}
 

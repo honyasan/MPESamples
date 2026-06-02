@@ -100,11 +100,11 @@ output:
 
 :::
 
-## はじめに {ignore=true .noNumbering .unnumbered}
+## はじめに {ignore=true .noNumbering .unnumbered .page-break-common}
 
 これはサンプルファイルです。
 
-## 見出しレベル２{#midashi_level_2-1}
+## 見出しレベル２{#midashi_level_2-1 .page-break-common}
 
 ### 見出しレベル３
 
@@ -128,7 +128,7 @@ output:
 
 #### 見出しレベル４－４{#midashi_level_4-4}
 
-## マークダウンの各記法{#markdown_no_kakukihou .page-break}
+## マークダウンの各記法{#markdown_no_kakukihou .page-break-common}
 
 ### 強調{#kyouchou}
 
@@ -483,10 +483,6 @@ date|出版日|
 [^1]: 小麦粉と塩水を練り合わせて麺状に切った食べ物。魚介の出汁がきいたつゆにつけて食べる。
 ```
 
-今日のお昼ご飯はうどん[^1]です。
-
-[^1]: 小麦粉と塩水を練り合わせて麺状に切った食べ物。魚介の出汁がきいたつゆにつけて食べる。
-
 ### マーク{#mark}
 
 どうやらマークを表現できるが==Kindle Previewerではスタイルが制限される==ようだ。
@@ -597,7 +593,7 @@ $$\sum_{n=1}^{100} n$$
 !!! Quote
     引用を表現できます。
 
-## 青空文庫的拡張{#aozora .page-break}
+## 青空文庫的拡張{#aozora .page-break-common}
 
 青空文庫の記法の一部に対応（参考：青空文庫「ルビとルビのように付く文字」。縦書きの前提）。  
 一部に試験的な拡張された表現を含む場合があります。
@@ -678,7 +674,7 @@ A.I. 《人工知能》がおかしな結果を返すごとに思い出す｜ Ar
 
 - 傍線　→　１種類に制限されるが、強調*で代用
 
-## 会話文{#conversation .page-break}
+## 会話文{#conversation .page-break-common}
 
 花子は言った。
 にこやかに。  
@@ -701,7 +697,7 @@ A.I. 《人工知能》がおかしな結果を返すごとに思い出す｜ Ar
 朗らかに。  
 :::
 
-## スタイルの設定用{#check_page .page-break}
+## スタイルの設定用{#check_page .page-break-common}
 
 ### フォントの特徴の確認{#check_fonts}
 
@@ -848,7 +844,7 @@ A.I. 《人工知能》がおかしな結果を返すごとに思い出す｜ Ar
 
 ### おわりに {#owarini ignore=true .noNumbering}
 
-## 文献 {#references ignore=true .page-break .noNumbering}
+## 文献 {#references ignore=true .page-break-common .noNumbering}
 
 ### 引用文献 {#inyou_bunken ignore=true .noNumbering}
 
@@ -858,8 +854,31 @@ A.I. 《人工知能》がおかしな結果を返すごとに思い出す｜ Ar
 
 - サンプル文献
 
-## 奥付 {#okuzuke ignore=true .noNumbering}
+::::::::: {.page-end .okuduke .page-break-common}
 
-- 書名 チートシート
-- 著者・発行元 サンプルマン
-- 2024年1月1日 初版発行
+::::::okuduke-border
+
+:::title
+チートシート
+:::
+
+:::sub-title
+サブタイトル
+:::
+
+:::edition
+2024年 1月 1日　初版発行
+:::
+
+:::author
+著者・発行元　サンプルマン
+:::
+
+:::copyright
+本書を無断で複写・複製することを禁じます。  
+©Sample man
+:::
+
+::::::
+
+:::::::::

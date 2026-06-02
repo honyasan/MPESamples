@@ -360,7 +360,6 @@ dir | 横書き（ltr）・縦書き（rtl）の指定
 title title title | 書籍名
 author | 著者名 著者名 著者名
 date | 出版日
-
 : 長いテーブル長い長い長い
 
 :::
