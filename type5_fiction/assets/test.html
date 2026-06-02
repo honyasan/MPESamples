@@ -657,10 +657,10 @@ span.notes {
   text-align: end;
   margin-right: 3em;
 }
-/* 表紙ページがある場合のスタイル */
+/* 表紙ページがあるEPUB用のスタイル */
 #cover {
-  width: 100%;
-  height: 100%;
+  height: 100% !important;
+  /* 縦長のカバー画像を使用する場合 */
 }
 #cover-image {
   /* 縦長のカバー画像を使用して縦いっぱいにあわせる */
@@ -1059,12 +1059,17 @@ body .all-area {
 }
 .page-end {
   display: flex;
-  justify-content: center;
-  align-items: self-end;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
   width: 100%;
   height: 99vh;
   max-width: 100%;
   max-height: 100%;
+}
+.page-center,
+.copyright,
+.disclaimer {
   text-align: center;
 }
 .page-center .title {
@@ -1081,6 +1086,40 @@ body .all-area {
 .disclaimer .header {
   font-size: 1.8em;
   font-weight: 600;
+}
+.okuduke {
+  writing-mode: horizontal-tb;
+  line-height: 1;
+  text-align: left;
+}
+.okuduke-border {
+  border: solid 0px #000;
+  padding: 0.5em;
+}
+.okuduke p {
+  text-indent: 0em;
+  margin: 0.5em 0;
+}
+.okuduke .title {
+  font-size: 1.4em;
+  font-weight: 600;
+  margin: 0;
+}
+.okuduke .sub-title {
+  font-size: 1.2em;
+  font-weight: 600;
+  margin: 0 0 1em;
+}
+.okuduke .edition {
+  margin: 1em 0 2.5em;
+}
+.okuduke .author {
+  margin: 1em 0;
+}
+.okuduke .copyright {
+  margin: 0;
+  text-align: left;
+  line-height: 1.5;
 }
 
       </style>
@@ -1210,7 +1249,7 @@ section.chapter5 {
 }</style>
 <h1 class="noNumbering unnumbered" id="チートシート">チートシート</h1>
 <section id="目次" class="noNumbering page-break pdf-toc">
-<section><h2 class="noNumbering page-break">目次</h2>
+<h2 class="noNumbering page-break">目次</h2>
 <div class="code-chunk" data-id="code-chunk-id-0" data-cmd="toc"><div class="input-div"><div class="code-chunk-btn-group"><div class="run-btn btn btn-xs btn-primary"><span>▶︎</span></div><div class="run-all-btn btn btn-xs btn-primary">all</div></div><div class="status">running...</div></div><div class="output-div"></div></div>
 <ul>
 <li><div class="toc-link-wrapper"><a href="#midashi_level_2-1">第一章　見出しレベル２</a></div></li>
@@ -1219,10 +1258,10 @@ section.chapter5 {
 <li><div class="toc-link-wrapper"><a href="#conversation">第四章　会話文</a></div></li>
 <li><div class="toc-link-wrapper"><a href="#check_page">第五章　スタイルの設定用</a></div></li>
 </ul>
-</section></section>
-<section><h2 class="noNumbering unnumbered" id="はじめに">はじめに</h2>
+</section>
+<section><h2 class="noNumbering unnumbered page-break-common" id="はじめに">はじめに</h2>
 <p>　これはサンプルファイルです。</p>
-</section><section class="chapter1"><h2 id="midashi_level_2-1">第一章　見出しレベル２</h2>
+</section><section class="chapter1"><h2 class="page-break-common" id="midashi_level_2-1">第一章　見出しレベル２</h2>
 <h3 id="見出しレベル3">見出しレベル３</h3>
 <h4 id="midashi_level_4-1">見出しレベル４</h4>
 <h5 id="midashi_level_5-1">見出しレベル５</h5>
@@ -1234,7 +1273,7 @@ section.chapter5 {
 <h4 id="midashi_level_4-2">見出しレベル４－２</h4>
 <h4 id="midashi_level_4-3">見出しレベル４－３</h4>
 <h4 id="midashi_level_4-4">見出しレベル４－４</h4>
-</section><section class="chapter2"><h2 class="page-break" id="markdown_no_kakukihou">第二章　マークダウンの各記法</h2>
+</section><section class="chapter2"><h2 class="page-break-common" id="markdown_no_kakukihou">第二章　マークダウンの各記法</h2>
 <h3 id="kyouchou">強調</h3>
 <p>　この日本語は<em>斜体</em>にならないことがあります。<br>
 　これも <em>斜体</em> にならないことがあります。<br>
@@ -1722,7 +1761,6 @@ title</td>
 <pre class="text language-text" data-role="codeBlock" data-info="text"><code>今日のお昼ご飯はうどん[^1]です。
 
 [^1]: 小麦粉と塩水を練り合わせて麺状に切った食べ物。魚介の出汁がきいたつゆにつけて食べる。</code></pre>
-<p>　今日のお昼ご飯はうどん<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>です。</p>
 <h3 id="mark">マーク</h3>
 <p>　どうやらマークを表現できるが<mark>Kindle
 Previewerではスタイルが制限される</mark>ようだ。</p>
@@ -1819,7 +1857,7 @@ i\in\Lambda\\ 0&lt;j&lt;n \end{subarray}}\]</span></dt>
 <p>!!! Bug バグを表現できます。</p>
 <p>!!! Example 例を表現できます。</p>
 <p>!!! Quote 引用を表現できます。</p>
-</section><section class="chapter3"><h2 class="page-break" id="aozora">第三章　青空文庫的拡張</h2>
+</section><section class="chapter3"><h2 class="page-break-common" id="aozora">第三章　青空文庫的拡張</h2>
 <p>　青空文庫の記法の一部に対応（参考：青空文庫「ルビとルビのように付く文字」。縦書きの前提）。<br>
 　一部に試験的な拡張された表現を含む場合があります。</p>
 <pre class="text language-text" data-role="codeBlock" data-info="text"><code>文字《もじ》へのルビ  
@@ -1850,24 +1888,21 @@ Artificial Incompetence
 　数多くの修整<span class="notes">［＃「修整」の左に「パパ」のルビ］</span>の左に注記<br>
 　数多くの修整［＃「修正」の左に「パパ」のルビ］の左に注記、修正［＃「修整」の左に「パパ」の注記］の左に注記<br>
 　数多くの修正<span class="notes">［＃「修正」の左に「ママ」のルビ］</span>の左に注記、修正と修正<span class="notes">［＃「修正」の左に「パパ」の注記］</span>の左に注記</p>
-<pre class="text language-text" data-role="codeBlock" data-info="text"><code>&lt;div class="chiyose"&gt;
-
+<pre class="text language-text" data-role="codeBlock" data-info="text"><code>:::chiyose
 今日はいろいろあった。
-&lt;/div&gt;</code></pre>
+:::</code></pre>
 <div class="chiyose">
 <p>　今日はいろいろあった。</p>
 </div>
-<pre class="text language-text" data-role="codeBlock" data-info="text"><code>&lt;div class="chitsuki"&gt;
-
+<pre class="text language-text" data-role="codeBlock" data-info="text"><code>:::chitsuki
 昨日もいろいろあった気がする。
-&lt;/div&gt;</code></pre>
+:::</code></pre>
 <div class="chitsuki">
 <p>　昨日もいろいろあった気がする。</p>
 </div>
-<pre class="text language-text" data-role="codeBlock" data-info="text"><code>&lt;div class="page-center"&gt;
-
+<pre class="text language-text" data-role="codeBlock" data-info="text"><code>:::page-center
 一昨日の憂鬱　其の一
-&lt;/div&gt;</code></pre>
+:::</code></pre>
 <div class="page-center">
 <p>　一昨日の憂鬱　其の一</p>
 </div>
@@ -1878,7 +1913,7 @@ Artificial Incompetence
 <li><p>傍点•◦●○◉◎▲△﹅﹆×　→　ルビで代用</p></li>
 <li><p>傍線　→　１種類に制限されるが、強調*で代用</p></li>
 </ul>
-</section><section class="chapter4"><h2 class="page-break" id="conversation">第四章　会話文</h2>
+</section><section class="chapter4"><h2 class="page-break-common" id="conversation">第四章　会話文</h2>
 <p>　花子は言った。にこやかに。<br>
 「１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９」<br>
 　太郎は答えた。朗らかに。<br>
@@ -1891,7 +1926,7 @@ Artificial Incompetence
 <p>　花子は言った。にこやかに。<br>
 　太郎は答えた。朗らかに。</p>
 </div>
-</section><section class="chapter5"><h2 class="page-break" id="check_page">第五章　スタイルの設定用</h2>
+</section><section class="chapter5"><h2 class="page-break-common" id="check_page">第五章　スタイルの設定用</h2>
 <h3 id="check_fonts">フォントの特徴の確認</h3>
 <p>　本文</p>
 <p>　□□□□□□□□□□□□□□□□□□□<br>
@@ -2025,7 +2060,7 @@ Artificial Incompetence
 　９０１２３４５６７８<br>
 　０１２３４５６７８９</p>
 <h3 class="noNumbering" id="owarini">おわりに</h3>
-</section><section><h2 class="page-break noNumbering" id="references">文献</h2>
+</section><section><h2 class="page-break-common noNumbering" id="references">文献</h2>
 <h3 class="noNumbering" id="inyou_bunken">引用文献</h3>
 <ul>
 <li>サンプル文献</li>
@@ -2034,19 +2069,27 @@ Artificial Incompetence
 <ul>
 <li>サンプル文献</li>
 </ul>
-</section><section><h2 class="noNumbering" id="okuzuke">奥付</h2>
-<ul>
-<li>書名 チートシート</li>
-<li>著者・発行元 サンプルマン</li>
-<li>2024年1月1日 初版発行</li>
-</ul>
-</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn1"><p>小麦粉と塩水を練り合わせて麺状に切った食べ物。魚介の出汁がきいたつゆにつけて食べる。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
+<div class="page-end okuduke page-break-common">
+<div class="okuduke-border">
+<div class="title">
+<p>チートシート</p>
+</div>
+<div class="sub-title">
+<p>サブタイトル</p>
+</div>
+<div class="edition">
+<p>2024年 1月 1日　初版発行</p>
+</div>
+<div class="author">
+<p>著者・発行元　サンプルマン</p>
+</div>
+<div class="copyright">
+<p>本書を無断で複写・複製することを禁じます。<br>
+©Sample man</p>
+</div>
+</div>
+</div>
 </section>
-
       </div>
       
       
