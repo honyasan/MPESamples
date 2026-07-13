@@ -157,6 +157,20 @@
       }
     };
 
+    class DebugLog {
+      static log(...params) {
+        //console.log(params);
+      }
+
+      static warn(...params) {
+        //console.warn(params);
+      }
+
+      static error(...params) {
+        //console.error(params);
+      }
+    }
+
     class Node {
       constructor(type, raw) {
         this.type = type;
@@ -696,7 +710,7 @@
             this.processMath(node);
           }
           else if (node.type === 'container' && node.children) {
-            console.warn('unknown container merge process');
+            DebugLog.warn('unknown container merge process');
             // コンテナの中身も同様にマージ＋処理したい場合は再帰
             node.children.forEach(child => processNode(child));
             // 子供を toString して container 全体を更新
@@ -713,7 +727,7 @@
           .map(node => {
             const match = node.toString().trim().match(/^(#{1,6})\s+?([^\{]*)?(?:\s*\{(.*)\})?/);
             if (!match) {
-              console.warn('unexpected header node.');
+              DebugLog.warn('unexpected header node.');
               return null;
             }
             const attributes = match[3];
@@ -765,15 +779,15 @@
               })
                 .filter(node => node);
 
-              //console.warn(`level = ${headerNode[0]}, title = ${numberedTitle}, e.id = ${evaluationId}`);
+              //DebugLog.warn(`level = ${headerNode[0]}, title = ${numberedTitle}, e.id = ${evaluationId}`);
 
               // 通常はないはずの状況をチェック
               if (newTitles.length == 0) {
-                console.warn('not found header for toc.');
+                DebugLog.warn('not found header for toc.');
                 return tocRaw;
               }
               else if (newTitles.length > 1) {
-                console.warn('toc and headings are not one-to-one.');
+                DebugLog.warn('toc and headings are not one-to-one.');
               }
 
               // ナンバリング後の表記を返す
@@ -794,7 +808,7 @@
         const title = match[2];
         const hIndex = level - 1;
 
-        console.log(`level = ${level}, title = ${title}`);
+        DebugLog.log(`level = ${level}, title = ${title}`);
 
         // 見出しレベルをインデックス値に変換するデータ
         const headsToIndex = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
@@ -1084,6 +1098,20 @@
       }
     };
 
+    class DebugLog {
+      static log(...params) {
+        //console.log(params);
+      }
+
+      static warn(...params) {
+        //console.warn(params);
+      }
+
+      static error(...params) {
+        //console.error(params);
+      }
+    }
+
     class Node {
       constructor(type, raw = '') {
         this.type = type;
@@ -1141,7 +1169,6 @@
       hasId(id) {
         return this.isElement() && this.attributes && id && this.attributes['id'] === id;
       }
-
 
       get nextElementSibling() {
         if (!this.parent) return null;
@@ -1282,11 +1309,11 @@
             const newNode = new Node('text', text)
             this.appendChild(newNode);
             targetTextNodes = newNode;
-            console.error(`Warning: Some nodes but no text nodes, unexpected structure.`);
+            DebugLog.error(`Warning: Some nodes but no text nodes, unexpected structure.`);
           }
           else if (textNodes.length > 1) {
             // テキストノードが複数ある状況
-            console.error(`Warning: Unexpected structure with many text nodes.`);
+            DebugLog.error(`Warning: Unexpected structure with many text nodes.`);
           }
 
           // 先頭のテキストノードにテキストを設定して返す
@@ -1298,7 +1325,7 @@
 
           if (pNodes.length > 1) {
             // pノードが複数ある状況
-            console.error(`Warning: Unintended structure with multiple p node.`);
+            DebugLog.error(`Warning: Unintended structure with multiple p node.`);
           }
 
           // pタグがあればpタグ内のテキストノードの状況に応じる
@@ -1307,11 +1334,11 @@
             const newNode = new Node('text', text)
             targetPNode.appendChild(newNode);
             targetTextNodes = newNode;
-            console.error(`Warning: Unintended structure where there is no text node as a child of p.`);
+            DebugLog.error(`Warning: Unintended structure where there is no text node as a child of p.`);
           }
           else if (textNodes.length > 1) {
             // テキストノードが複数ある状況
-            console.error(`Warning: Unintended structure with multiple text node.`);
+            DebugLog.error(`Warning: Unintended structure with multiple text node.`);
           }
 
           // 先頭のテキストノードにテキストを設定して返す
@@ -1335,7 +1362,7 @@
       wrapWithSiblingElements(wrapTag, tagName) {
         const parent = this.parent;
         if (!parent) {
-          console.error('Error: Cannot wrap a node without a parent.');
+          DebugLog.error('Error: Cannot wrap a node without a parent.');
           return;
         }
 
@@ -1389,6 +1416,7 @@
 
       parse() {
         const root = new Node('root', '');
+
         this._parseChildren(root);
         return root;
       }
@@ -1401,10 +1429,10 @@
 
       _parseChildren(parentNode) {
         while (this.pos < this.htmlString.length) {
-          const remainingHtml = this.htmlString.substring(this.pos);
-
           // 終了タグ
-          const endTagMatch = remainingHtml.match(/^<\/([a-zA-Z0-9_-]+)>/);
+          const endTagRegex = /<\/([a-zA-Z0-9_-]+)>/y;
+          endTagRegex.lastIndex = this.pos;
+          const endTagMatch = endTagRegex.exec(this.htmlString);
           if (endTagMatch) {
             const tagName = endTagMatch[1];
             // 終了タグが親ノードと一致する場合、パースを終了する
@@ -1418,7 +1446,9 @@
           }
 
           // コメント
-          const commentMatch = remainingHtml.match(/^<!--.*?-->/s);
+          const commentTagRegex = /<!--.*?-->/ys;
+          commentTagRegex.lastIndex = this.pos;
+          const commentMatch = commentTagRegex.exec(this.htmlString);
           if (commentMatch) {
             const raw = commentMatch[0];
             parentNode.appendChild(new Node('comment', raw));
@@ -1427,7 +1457,9 @@
           }
 
           // DOCTYPE
-          const doctypeMatch = remainingHtml.match(/^<!DOCTYPE.*?>/s);
+          const doctypeRegex = /<!DOCTYPE.*?>/ys;
+          doctypeRegex.lastIndex = this.pos;
+          const doctypeMatch = doctypeRegex.exec(this.htmlString);
           if (doctypeMatch) {
             const raw = doctypeMatch[0];
             parentNode.appendChild(new Node('doctype', raw));
@@ -1436,7 +1468,9 @@
           }
 
           // 開始タグ
-          const startTagMatch = remainingHtml.match(/^<([a-zA-Z0-9_-]+)([\s\S]*?)>/s);
+          const startTagRegex = /<([a-zA-Z0-9_-]+)([\s\S]*?)>/ys;
+          startTagRegex.lastIndex = this.pos;
+          const startTagMatch = startTagRegex.exec(this.htmlString);
           if (startTagMatch) {
             const rawStart = startTagMatch[0];
             const tagName = startTagMatch[1];
@@ -1457,7 +1491,9 @@
           }
 
           // テキスト（空白、改行含む）
-          const textMatch = remainingHtml.match(/^[^<]+/s);
+          const textRegex = /[^<]+/ys;
+          textRegex.lastIndex = this.pos;
+          const textMatch = textRegex.exec(this.htmlString);
           if (textMatch) {
             const raw = textMatch[0];
             parentNode.appendChild(new Node('text', raw));
@@ -1525,7 +1561,7 @@
         // htmlのheadとbodyの存在をチェックし、ノードを保持する
         const elemHtml = this.root.querySelectorAll('html');
         if (!elemHtml || !elemHtml.length) {
-          console.log("Not find the html tag. Required for rendered html.");
+          DebugLog.log("Not find the html tag. Required for rendered html.");
         }
         else if (elemHtml.length > 1) {
           throw new Error('too much the html tag.');
@@ -1533,7 +1569,7 @@
 
         const elemHead = elemHtml.flatMap(elem => elem.querySelectorAll('head'));
         if (!elemHead || !elemHead.length) {
-          console.log("Not find the head tag. Required for rendered html.");
+          DebugLog.log("Not find the head tag. Required for rendered html.");
         }
         else if (elemHead.length > 1) {
           throw new Error('too much the head tag.');
@@ -1544,9 +1580,9 @@
 
         const elemBody = elemHtml.flatMap(elem => elem.querySelectorAll('body'));
         if (!elemBody || !elemBody.length) {
-          console.log("Not find the body tag. Required for rendered html.");
-          console.log("The beginning of the node is considered the body.");
-          console.log(`A gaven root node has ${this.root.children.length} child node.`);
+          DebugLog.log("Not find the body tag. Required for rendered html.");
+          DebugLog.log("The beginning of the node is considered the body.");
+          DebugLog.log(`A gaven root node has ${this.root.children.length} child node.`);
 
           this.elemBody = this.root;
         }
@@ -1600,7 +1636,7 @@
           // hタグ以降の要素をsectionでラップする
           const tagName = header.tagName;
           if (!['h1', 'h2', 'h3', 'h4'].includes(tagName.toLowerCase())) {
-            console.error(`Error: wrapWithSiblingElements must be called on an h1~h4 tag, but was called on <${tagName}>`);
+            DebugLog.error(`Error: wrapWithSiblingElements must be called on an h1~h4 tag, but was called on <${tagName}>`);
           }
           const wrapper = header.wrapWithSiblingElements('section', tagName);
 
@@ -1617,7 +1653,7 @@
             wrapper.chapter = workingIndexList[0];
             wrapper.headerLevel = workingIndexList.length;
           }
-          console.log(`${tagName} ${className} ${attributes}`);
+          DebugLog.log(`${tagName} ${className} ${attributes}`);
 
           // ナンバリングする深さの間、子レベルを再帰処理する
           const isLastDepth = !workingHeadList || workingHeadList.length === 0;
@@ -1653,7 +1689,7 @@
           });
         if (topHeaders.length > 0) {
           if (topHeaders.length > 1) {
-            console.log('Multiple h1s found. This may behave differently than intended.')
+            DebugLog.log('Multiple h1s found. This may behave differently than intended.')
           }
           bookTitle = topHeaders[0];
         }
@@ -1808,7 +1844,7 @@ section.${chapter.class} {
               while (currentNode) {
                 if (currentNode.isElement() && currentNode.hasTag('a')) {
                   if (foundTocLink) {
-                    console.warn(`multiple toc link. ${realHeaderTitle}`);
+                    DebugLog.warn(`multiple toc link. ${realHeaderTitle}`);
                   }
                   foundTocLink = currentNode;
                 }
@@ -1855,19 +1891,11 @@ section.${chapter.class} {
             }
             return link;
           });
-
-/*
-        const headParentSet = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
-        const headFrom = headParentSet.findIndex(h => h === this.options.headFrom);
-        const headList = headParentSet.slice(headFrom, headFrom + this.options.headDepth);
-
-        this._digHeads(this.elemBody, headList); */
       }
 
     }
 
     // メインフロー
-
     const options = defaultsOptions[selectedOptionType];
     const parser = new NumberingManager(html, options);
 
