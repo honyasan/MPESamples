@@ -15,6 +15,7 @@ html:
   offline: true
   toc: false
 puppeteer:
+  printBackground: true
   preferCSSPageSize: true
   displayHeaderFooter: false
 output:

@@ -13,6 +13,7 @@ html:
   offline: true
   toc: false
 puppeteer:
+  printBackground: true
   preferCSSPageSize: true
   displayHeaderFooter: false
   headerTemplate: "<div style=\"font-family: 'PlemolJP HS', 'SF Mono', 'Hiragino Kaku Gothic ProN', 'BIZ UDGothic', sans-serif; position: relative; margin-top: 0mm; font-size: 9pt; width: 100%;\"><div style=\"position: absolute; width: 100%; top: 5.2mm; text-align: center;\"></div></div>"

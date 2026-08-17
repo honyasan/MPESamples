@@ -89,7 +89,6 @@ pre>code.sourceCode>span {
 
 /* 横書き・最初のページは右で、右へ進む本のページ */
 
-
 @page :first {
   margin-left: var(--inner-margin);
   margin-right: var(--outer-margin);
@@ -352,21 +351,23 @@ del {
   color: #7e7e7e;
 }
 
-a:not([href]) {
+html body a:not([href]) {
   color: inherit;
   text-decoration: none;  /* ignored on Kindle */
 }
 
-a {
+html body a {
   color: #08c;
   text-decoration: none;  /* ignored on Kindle */
+}
 
-  @media print {
+@media print {
+  html body a {
     color: #000;        /* for Kindle Paperback */
   }
 }
 
-a:hover {
+html body a:hover {
   color: #00a3f5;
   text-decoration: none;  /* ignored on Kindle */
 }
@@ -414,9 +415,10 @@ li.task-list-item {
   cursor: pointer;
 }
 
-blockquote {
+html body blockquote {
   margin: 0 0 1em;
   padding: 0 0.6rem;
+  color: inherit;
   background-color: #f0f0f0;
   border-left: 5px solid #666;
 }
@@ -429,32 +431,36 @@ hr {
   border: 0 none;
 }
 
-table {
+html body table {
+  display: table;
+  width: auto;
+
   margin: 0 auto 1rem;
   border-collapse: collapse;
   border-spacing: 0;
   page-break-inside: avoid;
 }
 
-thead th, tbody td {
+html body thead th, html body tbody td {
+  border: 0;
   padding: 0.2rem 0.5rem;
   text-align: start;       /* 表の内容はデフォルトで左寄せ */
 }
 
-table > caption {
+html body table > caption {
   max-width: 100%;
   caption-side: top;
   text-align: center;
   word-break: break-all;
 }
 
-thead th {
+html body thead th {
   font-weight: 700;
   border-top: 2.5px solid black;
   border-bottom: 1px solid black;
 }
 
-tbody tr:last-child td {
+html body tbody tr:last-child td {
   border-bottom: 1px solid black;
 }
 
@@ -490,7 +496,7 @@ pre[data-line] {
   padding: 1em 0 1em 3em;
 }
 
-code {
+html body code {
   /* プレビュー画面で言語指定ありのコードブロックの文字色がVSCodeの色になる問題の措置 */
   color: inherit;
   background-color: inherit;
@@ -684,8 +690,6 @@ span.notes {
   padding: 0;
 }
 
-
-
 .pdf-toc,
 .pdf-toc ul {
   list-style: none;
@@ -697,7 +701,7 @@ span.notes {
 
 .pdf-toc .toc-link-wrapper:has(>*:nth-child(2)) {
   /* 目次の項に目次のドットラインとページ番号の要素があるとき */ 
-  display: flex;
+  display: flex !important;
   align-items: center;
   justify-content: space-between;
 }
@@ -1031,7 +1035,6 @@ h1, .page-center, .page-end, .column-all {
   height: 99vh;
   max-width: 100%;
   max-height: 100%;
-  text-align: center;
 }
 
 .page-end {
@@ -1063,20 +1066,31 @@ h1, .page-center, .page-end, .column-all {
   font-weight: 600;
 }
 
+.page-end .disclaimer {
+  text-align: left;
+
+  border: 1px solid;
+  padding: 0.5em 0.5em 0.0em 0.5em;
+}
+
 .disclaimer .header {
-  font-size: 1.8em;
+  text-align: center;
+
+  font-size: 1.2em;
   font-weight: 600;
 }
 
 .okuduke {
   writing-mode: horizontal-tb;
   line-height: 1.0;
-  text-align: left;
+  text-align: center;
 }
 
 .okuduke-border {
   border: solid 0px #000;
   padding: 0.5em;
+  width: 70%;
+  text-align: left;
 }
 
 .okuduke p {
