@@ -19,17 +19,18 @@
 
 ## 各フォルダについて
 
-|           フォルダ名           |                 説明                 |
-| :----------------------------- | :----------------------------------- |
-| type1_report                   | レポート風・見出し深さ２まで           |
-| type2_report_long              | レポート風・見出し深さ３まで           |
-| type3_non_fiction              | ノンフィクション風                    |
-| type4_non_fiction_wo_numbering | ノンフィクション風・ナンバリングなし    |
-| type5_fiction                  | フィクション風                        |
-| type6_tategaki_fiction         | 縦書き・フィクション風（試験段階）     |
-| type7_paper_like               | 論文風（出力はPDFのみ）               |
-| type8_non_fiction_en           | 洋書                                |
-| scripts                        | 関連スクリプト                       |
+|           フォルダ名           |                   説明                    |
+| :----------------------------- | :---------------------------------------- |
+| type1_report                   | レポート風・見出し深さ２まで              |
+| type2_report_long              | レポート風・見出し深さ３まで              |
+| type3_non_fiction              | ノンフィクション風                        |
+| type4_non_fiction_wo_numbering | ノンフィクション風・ナンバリングなし      |
+| type5_fiction                  | フィクション風                            |
+| type6_tategaki_fiction         | 縦書き・フィクション風（試験段階）        |
+| type7_paper_like               | 論文風（出力はPDFのみ）                   |
+| type8_non_fiction_en           | 洋書                                      |
+| ai-workspace                   | Antigravity IDE、Cursor IdE用（試験段階） |
+| scripts                        | 関連スクリプト                            |
 
 ## type1からtype7の各フォルダについて
 
