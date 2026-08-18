@@ -11,7 +11,7 @@
 > MPEはAntigravity IDEやCursorでもインストール可能ですが、PuppeteerによるPDF出力が正常に動作していません。
 > 例えば用紙サイズを指定すると、文字サイズが異常に小さくなるなどの問題が発生します。
 > また、コードブロックのテーマが反映されない問題も発生します。
-> そのため、ai-workspaceフォルダの内容は、実験段階の内容となっています。
+> エクスポートする際はVSCodeを併用するか、GitHub CopilotでAIを利用するのも一つの方法です。
 
 ## 概要
 
@@ -25,18 +25,18 @@
 
 ## 各フォルダについて
 
-|           フォルダ名           |                   説明                    |
-| :----------------------------- | :---------------------------------------- |
-| type1_report                   | レポート風・見出し深さ２まで              |
-| type2_report_long              | レポート風・見出し深さ３まで              |
-| type3_non_fiction              | ノンフィクション風                        |
-| type4_non_fiction_wo_numbering | ノンフィクション風・ナンバリングなし      |
-| type5_fiction                  | フィクション風                            |
-| type6_tategaki_fiction         | 縦書き・フィクション風（試験段階）        |
-| type7_paper_like               | 論文風（出力はPDFのみ）                   |
-| type8_non_fiction_en           | 洋書                                      |
-| ai-workspace                   | Antigravity IDE、Cursor IdE用（試験段階） |
-| scripts                        | 関連スクリプト                            |
+|           フォルダ名           |                     説明                      |
+| :----------------------------- | :-------------------------------------------- |
+| type1_report                   | レポート風・見出し深さ２まで                  |
+| type2_report_long              | レポート風・見出し深さ３まで                  |
+| type3_non_fiction              | ノンフィクション風                            |
+| type4_non_fiction_wo_numbering | ノンフィクション風・ナンバリングなし          |
+| type5_fiction                  | フィクション風                                |
+| type6_tategaki_fiction         | 縦書き・フィクション風（試験段階）            |
+| type7_paper_like               | 論文風（出力はPDFのみ）                       |
+| type8_non_fiction_en           | 洋書                                          |
+| ai-workspace                   | Antigravity IDE、Cursor IDE、GitHub Copolot用 |
+| scripts                        | 関連スクリプト                                |
 
 ## type1からtype7の各フォルダについて
 
@@ -182,6 +182,17 @@ Popplerを利用して、PDFファイル中の画像の解像度を調査する�
 ```
 
 参考のために公開しています。
+
+## ai-workspaceフォルダについて
+
+このフォルダの内容は、各IDEでAIのエージェントを利用する際のプロンプトの例です。  
+該当するIDEに対応したフォルダを、各自のワークスペース直下にコピーして使用します。
+
+| フォルダ名 |       説明        |
+| ---------- | ----------------- |
+| .agent     | Antigravity IDE用 |
+| .github    | GitHub Copolot用  |
+| .cursor    | CursorのIDE用     |
 
 ## 書籍について
 
