@@ -38,7 +38,7 @@
 | ai-workspace                   | Antigravity IDE、Cursor IDE、GitHub Copolot用 |
 | scripts                        | 関連スクリプト                                |
 
-## type1からtype7の各フォルダについて
+## 各typeのフォルダについて
 
 次のファイルがあります。
 
