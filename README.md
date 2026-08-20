@@ -7,12 +7,6 @@
 > なお、マークダウンの動作が変更され、pandoc拡張の「:::」構文がdivブロックとして出力されない不具合が混入しました。
 > この問題を回避するためには、MPE 0.8.22または0.8.27以降を使用してください。
 
-> [!IMPORTANT]
-> MPEはAntigravity IDEやCursorでもインストール可能ですが、当サンプルではPuppeteerによるPDF出力が正常に動作していません。
-> 例えば、文字サイズが異常に小さくなるなどの問題が発生します。
-> また、コードブロックのテーマが反映されない問題も発生します。
-> エクスポートする際はVSCodeを併用するか、GitHub CopilotでAIを利用するのも一つの方法です。
-
 ## 概要
 
 このプロジェクトは、Kindle本「Visual Studio CodeとマークダウンでKindle本を出版しよう！」の解説に利用したマークダウンのサンプルです。
@@ -56,6 +50,24 @@
 
 1. assetsフォルダのファイルを見て、目的の様式として十分かを確認する。
 1. VSCodeからフォルダをワークスペースとして開き、test.mdを変更してみる。
+
+### style.lessとコードブロックのテーマについて
+
+VSCode以外に、Antigravity/Cursorでも動作するスタイルシートになりました。
+冒頭390行目まで、VSCodeでは不要な、Antigravity/CursorでMPEが使用するスタイルのリセットを行なっています。
+VSCodeで複雑なcssを避けたい場合は削除してください。
+
+上記のスタイルの関係で、コードブロックのテーマはvs.css相当に固定されます。
+VSCodeでコードブロックに他のテーマを使用したい場合は、以下の行から390行目までを削除してください。
+
+> /* reset codeblock theme to vs.css for Antigravity/Cursor */
+
+また、以下の行も削除してください（薄い色が印刷時に変化するようになります）。
+
+> -webkit-print-color-adjust: exact;
+> print-color-adjust: exact;
+
+なお、Antigravity/CursorでpuppeteerによるPDF出力を利用するときは、コードブロックのテーマがgithub.cssに固定され、テーマを自由に変えることができないようです。
 
 ## 動作のカスタマイズ
 
