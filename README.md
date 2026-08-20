@@ -67,7 +67,7 @@ VSCodeでコードブロックに他のテーマを使用したい場合は、�
 > -webkit-print-color-adjust: exact;
 > print-color-adjust: exact;
 
-なお、Antigravity/CursorでpuppeteerによるPDF出力を利用するときは、コードブロックのテーマがgithub.cssに固定され、テーマを自由に変えることができないようです。
+なお、Antigravity/CursorでpuppeteerによるPDF出力を利用するときは、コードブロックのテーマがgithub.cssに固定され、GUIからのテーマ選択により変えることができないようです。
 
 ## 動作のカスタマイズ
 
