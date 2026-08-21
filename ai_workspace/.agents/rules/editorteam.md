@@ -1,7 +1,3 @@
----
-trigger: always_on
----
-
 # 文書作成チーム
 
 ## 編集者 (@editor)
